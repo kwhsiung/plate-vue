@@ -24,6 +24,7 @@ const Project = () => import('../views/Project.vue')
 const Search = () => import('../views/Search.vue')
 const TimelineView = () => import('../views/TimelineView.vue')
 const Topic = () => import('../views/Topic.vue')
+const Subscribe = () => import('../views/Subscribe.vue')
 const Video = () => import('../views/Video.vue')
 
 const oathCategories = Object.values(OATH_PLAYLIST).map(item => `/category/${item.categoryName}`)
@@ -62,6 +63,7 @@ export function createRouter () {
       { path: '/timeline/:title', component: TimelineView },
       { path: '/tag/:tagId', component: List },
       { path: '/topic/:topicId', component: Topic },
+      { path: '/subscribe', component: Subscribe },
       { path: '/404', component: NotFound },
       { path: '/', component: Home },
     ]
