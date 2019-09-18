@@ -54,4 +54,12 @@ export default {
   font-size 32px
   color #e81831
   margin 16px 0 0 0
+
+@media (max-width 768px)
+  .price
+    font-size 18px
+
+  .price-on-sale
+    font-size 24px
+    margin 8px 0 0 0
 </style>

@@ -12,7 +12,7 @@
       />
     </div>
     <nav>
-      <button>
+      <button @click="$emit('buttonClick')">
         訂購{{ currentPlan.title }}
       </button>
     </nav>
@@ -24,7 +24,7 @@ import SubPlanPrice from './SubPlanPrice.vue'
 
 export default {
   props: {
-    duration: {
+    yearDuartion: {
       type: Number,
       required: true,
       validator(value) {
@@ -55,7 +55,7 @@ export default {
   },
   computed: {
     currentPlan() {
-      return this.plans[this.duration - 1]
+      return this.plans[this.yearDuartion - 1]
     }
   }
 }
@@ -108,4 +108,32 @@ nav
     display flex
     justify-content center
     align-items center
+
+@media (max-width 768px)
+  .sub-plan
+    width 100%
+    height auto
+    padding 20px 10px
+    &__content
+      margin 22px 0 0 0
+
+  .title
+    padding 0 0 14px 0
+    h1
+      font-size 26px
+
+  .content
+    font-size 18px
+    p
+      line-height 1.5
+    &__sub-plan-price
+      margin 20px 0 0 0
+
+  nav
+    margin 17px 0 0 0
+    position static
+    width 100%
+    button
+      width 100%
+      height 50px
 </style>

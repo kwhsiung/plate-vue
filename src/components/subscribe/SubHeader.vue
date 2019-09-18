@@ -4,11 +4,12 @@
       <li
         v-for="(state, i) in states"
         :key="state"
-        v-text="state"
         :class="{
-          'active': i <= activeStateIndex
+          'active': i <= activeStateIndex - 1
         }"
-      />
+      >
+        <span v-text="state" />
+      </li>
     </ol>
   </header>
 </template>
@@ -22,7 +23,7 @@ export default {
     },
     activeStateIndex: {
       type: Number,
-      default: 0
+      default: 1
     }
   }
 }
@@ -79,4 +80,25 @@ li
     color white
     &:before
       background-color white
+
+@media (max-width 768px)
+  header
+    height 100px
+
+  li:after
+    width 30px
+    height 30px
+    font-size 18px
+    margin 0 7px 0 0
+    
+  li
+    font-size 15px
+    & + &
+      &:before
+        width 16px
+        margin 0 15px
+
+    span
+      width 30px
+      line-height 1.5
 </style>
