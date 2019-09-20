@@ -193,7 +193,7 @@ const mixinFixedAside = {
         entries.forEach(entry => {
           this.shouldAsideFixed = !entry.isIntersecting
         })
-      })
+      }, options)
 
       const target = document.querySelector('#sub-form-header')
       observer.observe(target)
