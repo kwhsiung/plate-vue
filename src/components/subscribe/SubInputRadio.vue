@@ -1,10 +1,25 @@
 <template>
   <label class="radio-container">
-    我有續訂折扣碼
-    <input type="radio">
-    <span class="checkmark"></span>
+    <slot />
+    <input
+      type="radio"
+      :checked="checked"
+      @change="$emit('change', !checked)"
+    >
+    <span class="checkmark" />
   </label>
 </template>
+
+<script>
+export default {
+  props: {
+    checked: {
+      type: Boolean,
+      default: false
+    }
+  }
+}
+</script>
 
 <style lang="stylus" scoped>
 /* Customize the label (the container) */
