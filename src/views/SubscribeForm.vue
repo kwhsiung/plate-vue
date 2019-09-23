@@ -5,7 +5,10 @@
       class="sub__header"
       :active-state-index="2"
     />
-    <section class="sub__section section">
+    <section
+      id="sub-form-section"
+      class="sub__section section"
+    >
       <main class="section__main main">
         <section class="main__form-wrapper form-wrapper">
           <header>
@@ -185,17 +188,16 @@ const mixinFixedAside = {
       require('intersection-observer')
 
       const options = {
-        root: document.querySelector('body'),
-        threshold: 1
+        rootMargin: '0px 0px -100% 0px'
       }
 
       const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
-          this.shouldAsideFixed = !entry.isIntersecting
+          this.shouldAsideFixed = entry.isIntersecting
         })
       }, options)
 
-      const target = document.querySelector('#sub-form-header')
+      const target = document.querySelector('#sub-form-section')
       observer.observe(target)
     }
   },
