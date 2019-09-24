@@ -12,15 +12,19 @@
       />
     </div>
     <nav>
-      <button @click="$emit('buttonClick')">
+      <SubButtonSubmit
+        class="sub-plan__button"
+        @click.native="$emit('buttonClick')"
+      >
         訂購{{ currentPlan.title }}
-      </button>
+      </SubButtonSubmit>
     </nav>
   </div>
 </template>
 
 <script>
 import SubPlanPrice from './SubPlanPrice.vue'
+import SubButtonSubmit from './SubButtonSubmit.vue'
 
 export default {
   props: {
@@ -33,7 +37,8 @@ export default {
     }
   },
   components: {
-    SubPlanPrice
+    SubPlanPrice,
+    SubButtonSubmit
   },
   data() {
     return {
@@ -71,6 +76,8 @@ export default {
   position relative
   &__content
     margin 18px 0 0 0
+  &__button
+    width 340px
 
 .title
   padding 0 0 17px 0
@@ -98,16 +105,6 @@ nav
   position absolute
   bottom 40px
   width calc(100% - 20px - 20px)
-  button
-    width 340px
-    height 56px
-    border-radius 4px
-    background-color #1b7aae
-    font-size 18px
-    color #ffffff
-    display flex
-    justify-content center
-    align-items center
 
 @media (max-width 768px)
   .sub-plan

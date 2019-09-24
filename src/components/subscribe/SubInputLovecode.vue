@@ -1,22 +1,28 @@
 <template>
-  <div class="coupon">
-    <div class="coupon__radio-wrapper radio-wrapper">
+  <div class="lovecode">
+    <div class="lovecode__radio-wrapper radio-wrapper">
       <SubInputNativeRadio
         class="radio-wrapper__radio"
         :checked="radioChecked"
         @change="handleCheck"
       >
-        我有續訂折扣碼
+        捐贈
       </SubInputNativeRadio>
-      <p>
-        折扣 80 元、加贈 1 期
-      </p>
     </div>
-    <SubInput
-      v-show="radioChecked"
-      class="coupon__input"
-      type="text"
-    />
+    <div v-show="radioChecked">
+      <SubInput
+        class="lovecode__input"
+        type="text"
+        placeholder="請輸入愛心碼 8 位數字"
+      />
+      <a
+        class="lovecode__link"
+        href="https://www.einvoice.nat.gov.tw/APCONSUMER/BTC603W/"
+        target="_blank"
+        rel="noopener noreferrer"
+        v-text="'查詢愛心碼'"
+      />
+    </div>
   </div>
 </template>
 
@@ -43,7 +49,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.coupon
+.lovecode
   display flex !important
   flex-direction column !important
   align-items flex-start !important
@@ -51,6 +57,10 @@ export default {
   &__input
     margin 10px 0 0 30px
     width 220px
+  &__link
+    color #1b7aae
+    text-decoration underline
+    margin 0 0 0 10px
 
 .radio-wrapper
   display flex

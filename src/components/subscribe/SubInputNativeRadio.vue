@@ -25,6 +25,7 @@ export default {
 /* Customize the label (the container) */
 .radio-container {
   display: flex;
+  flex-direction row !important
   align-items center
   position: relative;
   padding-left: 30px;

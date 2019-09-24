@@ -1,21 +1,25 @@
 <template>
-  <div class="coupon">
-    <div class="coupon__radio-wrapper radio-wrapper">
+  <div class="invoice-triplicate">
+    <div class="invoice-triplicate__radio-wrapper radio-wrapper">
       <SubInputNativeRadio
         class="radio-wrapper__radio"
         :checked="radioChecked"
         @change="handleCheck"
       >
-        我有續訂折扣碼
+        三聯式發票
       </SubInputNativeRadio>
-      <p>
-        折扣 80 元、加贈 1 期
-      </p>
     </div>
     <SubInput
       v-show="radioChecked"
-      class="coupon__input"
+      class="invoice-triplicate__input"
       type="text"
+      placeholder="請輸入抬頭"
+    />
+    <SubInput
+      v-show="radioChecked"
+      class="invoice-triplicate__input"
+      type="text"
+      placeholder="請輸入統一編號 8 位數字"
     />
   </div>
 </template>
@@ -43,7 +47,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.coupon
+.invoice-triplicate
   display flex !important
   flex-direction column !important
   align-items flex-start !important

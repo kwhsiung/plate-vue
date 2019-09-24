@@ -15,7 +15,10 @@
             <h1>
               訂購項目
             </h1>
-            <button @click="backToSubscribePlans">
+            <button
+              class="normal"
+              @click="backToSubscribePlans"
+            >
               修改
             </button>
           </header>
@@ -55,7 +58,7 @@
                 />
                 <span>-</span>
                 <SubInput
-                  class="form-wrapper__input form-wrapper__input--xs"
+                  class="form-wrapper__input form-wrapper__input--xxs"
                   placeholder="EXT"
                 />
               </div>
@@ -85,6 +88,11 @@
             </h1>
           </header>
           <div>
+            <SubInputNativeCheckbox>
+              同訂購人資訊
+            </SubInputNativeCheckbox>
+          </div>
+          <div>
             <label>
               姓名
               <SubInput
@@ -107,7 +115,7 @@
                 />
                 <span>-</span>
                 <SubInput
-                  class="form-wrapper__input form-wrapper__input--xs"
+                  class="form-wrapper__input form-wrapper__input--xxs"
                   placeholder="EXT"
                 />
               </div>
@@ -129,6 +137,100 @@
               />
             </label>
           </div>
+        </section>
+        <section class="main__form-wrapper form-wrapper">
+          <header>
+            <h1>
+              寄送方式
+            </h1>
+          </header>
+          <div>
+            <p>
+              雜誌每週三出刊，週五前可收到雜誌。欲更改收件地址，請於上班時間來電告知。
+            </p>
+          </div>
+          <div>
+            <SubInputNativeRadio>
+              限時專送 NT$ 0 / 期
+            </SubInputNativeRadio>
+          </div>
+          <div>
+            <SubInputNativeRadio>
+              限時掛號 NT$ 20 / 期
+            </SubInputNativeRadio>
+          </div>
+        </section>
+        <section class="main__form-wrapper form-wrapper">
+          <header>
+            <h1>
+              電子發票
+            </h1>
+          </header>
+          <div>
+            <p>
+              發票將於完成訂購後 7 個工作天內寄達。
+            </p>
+          </div>
+          <div>
+            <SubInputLovecode />
+          </div>
+          <div>
+            <SubInputInvoiceDuplicate />
+          </div>
+          <div>
+            <SubInputInvoiceTriplicate />
+          </div>
+        </section>
+        <section class="main__form-wrapper form-wrapper">
+          <div>
+            <SubInputNativeCheckbox>
+              我已閱讀並同意：
+            </SubInputNativeCheckbox>
+          </div>
+          <div>
+            <p class="indent">
+              鏡週刊於行銷目的範圍內得永久彙集。處理及利用本人填寫之訂單資料，並得利用前述資料而為本公司在台灣地區對本人發送活動、服務訊息。本公司對所彙集資料依法保密。本人如有請求停止彙集、處理、利用之需要可書面或致電訂戶組處理 (02) 6636-6800。
+            </p>
+          </div>
+        </section>
+        <section class="main__form-wrapper form-wrapper">
+          <header>
+            <h1>
+              信用卡
+            </h1>
+          </header>
+          <div>
+            <label>
+              卡號
+              <SubInput
+                class="form-wrapper__input form-wrapper__input--l"
+                placeholder="0000 0000 0000 0000"
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              有效期限
+              <SubInput
+                class="form-wrapper__input form-wrapper__input--xs"
+                placeholder="MM / YY"
+              />
+            </label>
+            <label>
+              卡片後三碼
+              <SubInput
+                class="form-wrapper__input form-wrapper__input--xs"
+                placeholder="CVV"
+              />
+            </label>
+          </div>
+        </section>
+        <section class="main__form-wrapper form-wrapper">
+          <SubButtonSubmit
+            class="submit"
+          >
+            確認訂購
+          </SubButtonSubmit>
         </section>
       </main>
       <aside
@@ -171,8 +273,13 @@
 import SubHeader from 'src/components/subscribe/SubHeader.vue'
 import SubTableCart from 'src/components/subscribe/SubTableCart.vue'
 import SubInput from 'src/components/subscribe/SubInput.vue'
-import SubInputRadio from 'src/components/subscribe/SubInputRadio.vue'
+import SubInputNativeRadio from 'src/components/subscribe/SubInputNativeRadio.vue'
+import SubInputNativeCheckbox from 'src/components/subscribe/SubInputNativeCheckbox.vue'
 import SubInputCoupon from 'src/components/subscribe/SubInputCoupon.vue'
+import SubInputLovecode from 'src/components/subscribe/SubInputLovecode.vue'
+import SubInputInvoiceDuplicate from 'src/components/subscribe/SubInputInvoiceDuplicate.vue'
+import SubInputInvoiceTriplicate from 'src/components/subscribe/SubInputInvoiceTriplicate.vue'
+import SubButtonSubmit from 'src/components/subscribe/SubButtonSubmit.vue'
 import SubTablePriceTotal from 'src/components/subscribe/SubTablePriceTotal.vue'
 import SubDiscountHint from 'src/components/subscribe/SubDiscountHint.vue'
 import SubFooter from 'src/components/subscribe/SubFooter.vue'
@@ -211,8 +318,13 @@ export default {
     SubHeader,
     SubTableCart,
     SubInput,
-    SubInputRadio,
+    SubInputNativeRadio,
+    SubInputNativeCheckbox,
     SubInputCoupon,
+    SubInputLovecode,
+    SubInputInvoiceDuplicate,
+    SubInputInvoiceTriplicate,
+    SubButtonSubmit,
     SubTablePriceTotal,
     SubDiscountHint,
     SubFooter
@@ -262,16 +374,20 @@ export default {
     font-weight normal
     color #4a4a4a
   button
-    width 72px
-    height 36px
-    border-radius 4px
-    background-color #f5f5f5
-    border none
-    font-size 15px
-    color #4a4a4a
-    display flex
-    justify-content center
-    align-items center
+    &.normal
+      width 72px
+      height 36px
+      border-radius 4px
+      background-color #f5f5f5
+      border none
+      font-size 15px
+      color #4a4a4a
+      display flex
+      justify-content center
+      align-items center
+    &.submit
+      width 490px
+      margin 0 auto
   div
     margin 20px 0 0 0
     display flex
@@ -284,12 +400,21 @@ export default {
       margin 0
       span
         margin 0 4px
+  p
+    margin 0
+    color #4a4a4a
+    font-size 15px
+    line-height 1.87
+    &.indent
+      margin 0 0 0 30px
   label + label
     margin 0 0 0 30px
   &__input
     margin 6px 0 0 0
-    &--xs
+    &--xxs
       width 72px
+    &--xs
+      width 112px
     &--s
       width 180px
     &--m

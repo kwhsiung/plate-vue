@@ -1,21 +1,30 @@
 <template>
-  <div class="coupon">
-    <div class="coupon__radio-wrapper radio-wrapper">
+  <div class="invoice-duplicate">
+    <div class="invoice-duplicate__radio-wrapper radio-wrapper">
       <SubInputNativeRadio
         class="radio-wrapper__radio"
         :checked="radioChecked"
         @change="handleCheck"
       >
-        我有續訂折扣碼
+        二聯式發票（含載具）
       </SubInputNativeRadio>
-      <p>
-        折扣 80 元、加贈 1 期
-      </p>
     </div>
+    <SubInputNativeSelect
+      v-show="radioChecked"
+      class="invoice-duplicate__input"
+    >
+      <option
+        v-for="option in options"
+        :key="option"
+        :value="option"
+        v-text="option"
+      />
+    </SubInputNativeSelect>
     <SubInput
       v-show="radioChecked"
-      class="coupon__input"
+      class="invoice-duplicate__input"
       type="text"
+      placeholder="xxxxxx"
     />
   </div>
 </template>
@@ -23,15 +32,22 @@
 <script>
 import SubInput from './SubInput.vue'
 import SubInputNativeRadio from './SubInputNativeRadio.vue'
+import SubInputNativeSelect from './SubInputNativeSelect.vue'
 
 export default {
   components: {
     SubInput,
-    SubInputNativeRadio
+    SubInputNativeRadio,
+    SubInputNativeSelect
   },
   data() {
     return {
-      radioChecked: false
+      radioChecked: false,
+      options: [
+        'Email 載具',
+        '手機條碼載具',
+        '自然人憑證條碼'
+      ]
     }
   },
   methods: {
@@ -43,7 +59,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.coupon
+.invoice-duplicate
   display flex !important
   flex-direction column !important
   align-items flex-start !important
