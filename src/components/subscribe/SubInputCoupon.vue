@@ -8,7 +8,7 @@
       >
         我有續訂折扣碼
       </SubInputNativeRadio>
-      <p>
+      <p v-show="true">
         折扣 80 元、加贈 1 期
       </p>
     </div>
@@ -61,4 +61,12 @@ export default {
     color #064f77
     position relative
     bottom 1px
+
+@media (max-width 768px)
+  .radio-wrapper
+    flex-direction column
+    p
+      margin 10px 0 0 0
+      // padding 0 0 0 30px
+      transform translate(26px, 0)
 </style>

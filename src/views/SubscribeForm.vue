@@ -200,6 +200,9 @@
             </h1>
           </header>
           <div class="form-wrapper__block">
+            <SubCreditCardLogos />
+          </div>
+          <div class="form-wrapper__block form-wrapper__block--more-margin">
             <label class="form-wrapper__label">
               卡號
               <SubInput
@@ -279,6 +282,7 @@ import SubInputCoupon from 'src/components/subscribe/SubInputCoupon.vue'
 import SubInputLovecode from 'src/components/subscribe/SubInputLovecode.vue'
 import SubInputInvoiceDuplicate from 'src/components/subscribe/SubInputInvoiceDuplicate.vue'
 import SubInputInvoiceTriplicate from 'src/components/subscribe/SubInputInvoiceTriplicate.vue'
+import SubCreditCardLogos from 'src/components/subscribe/SubCreditCardLogos.vue'
 import SubButtonSubmit from 'src/components/subscribe/SubButtonSubmit.vue'
 import SubTablePriceTotal from 'src/components/subscribe/SubTablePriceTotal.vue'
 import SubDiscountHint from 'src/components/subscribe/SubDiscountHint.vue'
@@ -324,6 +328,7 @@ export default {
     SubInputLovecode,
     SubInputInvoiceDuplicate,
     SubInputInvoiceTriplicate,
+    SubCreditCardLogos,
     SubButtonSubmit,
     SubTablePriceTotal,
     SubDiscountHint,
