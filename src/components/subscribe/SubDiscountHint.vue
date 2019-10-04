@@ -32,4 +32,5 @@ export default {
   justify-content space-between
   p
     margin 0
+    font-size 15px
 </style>

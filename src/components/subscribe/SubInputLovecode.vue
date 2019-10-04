@@ -50,10 +50,10 @@ export default {
 
 <style lang="stylus" scoped>
 .lovecode
-  display flex !important
-  flex-direction column !important
-  align-items flex-start !important
-  margin 0 !important
+  display flex  
+  flex-direction column 
+  align-items flex-start  
+  margin 0
   &__input
     margin 10px 0 0 30px
     width 220px
@@ -71,4 +71,10 @@ export default {
     color #064f77
     position relative
     bottom 1px
+
+@media (max-width 768px)
+  .lovecode
+    &__link
+      display block
+      margin 10px 0 0 30px
 </style>

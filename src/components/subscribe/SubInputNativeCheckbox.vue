@@ -30,7 +30,7 @@ export default {
   position: relative;
   padding-left: 30px;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 18px !important;
   user-select: none;
   color #4a4a4a
   height 22px

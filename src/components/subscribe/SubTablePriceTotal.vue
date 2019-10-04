@@ -97,4 +97,16 @@ export default {
   td
     &:last-child
       text-align right
+
+@media (max-width 768px)
+  .table-wrapper
+    &__count-table
+      margin 24px 0 0 0
+      td:first-child
+        max-width 25vw
+        white-space nowrap
+        overflow hidden
+        text-overflow ellipsis
+    h1
+      font-size 22px
 </style>

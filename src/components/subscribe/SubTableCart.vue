@@ -36,4 +36,25 @@ th, td
   text-align right
   &:first-child
     text-align left
+
+th
+  padding 0 0 14px 0
+
+@media (max-width 768px)
+  tbody
+    font-size 15px
+
+  th, td
+    text-align left
+    &:nth-child(2)
+      text-align right
+      min-width 50px
+    &:nth-child(3)
+      text-align right
+      min-width 100px
+
+  tbody
+    td
+      &:nth-child(1)
+        line-height 1.5
 </style>
