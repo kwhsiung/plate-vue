@@ -1,6 +1,11 @@
 <template>
-  <section class="receipt">
-    <SubReceiptProduct />
+  <section class="receipts">
+    <SubReceiptProduct
+      class="receipts__receipt"
+    />
+    <SubReceiptCustomer
+      class="receipts__receipt"
+    />
   </section>
 </template>
 
@@ -17,10 +22,12 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.receipt
+.receipts
   width 100%
-  height 1000px
   background-color #f5f5f5
   border-radius 4px
   padding 22px 25px
+  &__receipt
+    & + &
+      margin 42px 0 0 0
 </style>
