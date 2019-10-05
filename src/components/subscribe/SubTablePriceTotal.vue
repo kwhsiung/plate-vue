@@ -1,6 +1,5 @@
 <template>
-  <Div class="table-wrapper">
-    <h1>訂單資訊</h1>
+  <div class="table-wrapper">
     <table class="table-wrapper__count-table count-table">
       <tbody>
         <tr
@@ -24,12 +23,10 @@
         </tr>
       </tbody>
     </table>
-  </Div>
+  </div>
 </template>
 
 <script>
-import Div from './SubDiv.vue'
-
 export default {
   props: {
     items: {
@@ -53,9 +50,6 @@ export default {
       return Math.abs(value)
     }
   },
-  components: {
-    Div
-  },
   computed: {
     itemPriceTotal() {
       return this.items.reduce((acc, curr) => acc + curr.itemPrice, 0)
@@ -74,14 +68,6 @@ export default {
   display flex
   flex-direction column
   align-items center
-  &__count-table
-    margin 26px 0 0 0
-  h1
-    margin 0
-    font-size 26px
-    font-weight normal
-    color #4a4a4a
-    width 100%
   table
     font-size 15px
     color #4a4a4a
@@ -101,12 +87,9 @@ export default {
 @media (max-width 768px)
   .table-wrapper
     &__count-table
-      margin 24px 0 0 0
       td:first-child
         max-width 25vw
         white-space nowrap
         overflow hidden
         text-overflow ellipsis
-    h1
-      font-size 22px
 </style>

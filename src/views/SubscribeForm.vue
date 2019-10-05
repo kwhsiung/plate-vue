@@ -243,7 +243,7 @@
           'aside'
         ]"
       >
-        <SubTablePriceTotal
+        <SubHintPriceTotal
           class="aside__item"
           :items="[
             {
@@ -256,12 +256,12 @@
             }
           ]"
         />
-        <SubDiscountHint
+        <SubHintDiscount
           class="aside__item"
           :title="'符合一年方案優惠'"
           :caption="'贈送 5 期'"
         />
-        <SubDiscountHint
+        <SubHintDiscount
           class="aside__item"
           :title="'符合續訂優惠'"
           :caption="'贈送 1 期'"
@@ -284,8 +284,8 @@ import SubInputInvoiceDuplicate from 'src/components/subscribe/SubInputInvoiceDu
 import SubInputInvoiceTriplicate from 'src/components/subscribe/SubInputInvoiceTriplicate.vue'
 import SubCreditCardLogos from 'src/components/subscribe/SubCreditCardLogos.vue'
 import SubButtonSubmit from 'src/components/subscribe/SubButtonSubmit.vue'
-import SubTablePriceTotal from 'src/components/subscribe/SubTablePriceTotal.vue'
-import SubDiscountHint from 'src/components/subscribe/SubDiscountHint.vue'
+import SubHintPriceTotal from 'src/components/subscribe/SubHintPriceTotal.vue'
+import SubHintDiscount from 'src/components/subscribe/SubHintDiscount.vue'
 import SubFooter from 'src/components/subscribe/SubFooter.vue'
 
 const mixinFixedAside = {
@@ -330,8 +330,8 @@ export default {
     SubInputInvoiceTriplicate,
     SubCreditCardLogos,
     SubButtonSubmit,
-    SubTablePriceTotal,
-    SubDiscountHint,
+    SubHintPriceTotal,
+    SubHintDiscount,
     SubFooter
   },
   mixins: [ mixinFixedAside ],

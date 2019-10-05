@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     handleButtonClick(yearDuration = 1) {
-      this.$router.push(`/subscribe-form/${yearDuration}`)
+      this.$router.push(`/subscribe-magazine-form/${yearDuration}`)
     }
   }
 }

@@ -26,6 +26,7 @@ const TimelineView = () => import('../views/TimelineView.vue')
 const Topic = () => import('../views/Topic.vue')
 const SubscribePlans = () => import('../views/SubscribePlans.vue')
 const SubscribeForm = () => import('../views/SubscribeForm.vue')
+const SubscribeResult = () => import('../views/SubscribeResult.vue')
 const Video = () => import('../views/Video.vue')
 
 const oathCategories = Object.values(OATH_PLAYLIST).map(item => `/category/${item.categoryName}`)
@@ -64,8 +65,15 @@ export function createRouter () {
       { path: '/timeline/:title', component: TimelineView },
       { path: '/tag/:tagId', component: List },
       { path: '/topic/:topicId', component: Topic },
-      { path: '/subscribe-plans', component: SubscribePlans },
-      { path: '/subscribe-form/:yearDuration', component: SubscribeForm },
+      { path: '/subscribe-magazine-plans', component: SubscribePlans },
+      { path: '/subscribe-magazine-form/:yearDuration', component: SubscribeForm },
+      { 
+        path: '/subscribe-magazine-result',
+        component: SubscribeResult,
+        // redirect() {
+        //   return '/subscribe-plans'
+        // }
+      },
       { path: '/404', component: NotFound },
       { path: '/', component: Home },
     ]
