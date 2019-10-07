@@ -27,6 +27,7 @@ const Topic = () => import('../views/Topic.vue')
 const SubscribePlans = () => import('../views/SubscribePlans.vue')
 const SubscribeForm = () => import('../views/SubscribeForm.vue')
 const SubscribeResult = () => import('../views/SubscribeResult.vue')
+const SubscribeError = () => import('../views/SubscribeError.vue')
 const Video = () => import('../views/Video.vue')
 
 const oathCategories = Object.values(OATH_PLAYLIST).map(item => `/category/${item.categoryName}`)
@@ -70,6 +71,13 @@ export function createRouter () {
       { 
         path: '/subscribe-magazine-result',
         component: SubscribeResult,
+        // redirect() {
+        //   return '/subscribe-plans'
+        // }
+      },
+      { 
+        path: '/subscribe-magazine-error',
+        component: SubscribeError,
         // redirect() {
         //   return '/subscribe-plans'
         // }
