@@ -27,6 +27,7 @@
           </td>
           <td>
             <SubTablePriceTotal
+              class="table__price-total-table table__price-total-table--desktop"
               :items="[
                 {
                   itemTitle: '商品總計商品總計商品總計',
@@ -42,6 +43,19 @@
         </tr>
       </tbody>
     </table>
+    <SubTablePriceTotal
+      class="table__price-total-table table__price-total-table--mobile"
+      :items="[
+        {
+          itemTitle: '商品總計商品總計商品總計',
+          itemPrice: 999
+        },
+        {
+          itemTitle: '-112',
+          itemPrice: -1000
+        }
+      ]"
+    />
   </div>
 </template>
 
@@ -76,6 +90,11 @@ export default {
     min-width 145px
   td:nth-child(2)
     width 100%
+  &__price-total-table
+    &--desktop
+      display flex
+    &--mobile
+      display none
 
 @media (max-width 768px)
   .receipt-product
@@ -89,4 +108,10 @@ export default {
       padding 6px 0
     td:first-child
       min-width 100px
+    &__price-total-table
+      margin 6px 0 0 0
+      &--desktop
+        display none
+      &--mobile
+        display flex
 </style>
