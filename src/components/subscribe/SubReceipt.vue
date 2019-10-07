@@ -30,4 +30,11 @@ export default {
   &__receipt
     & + &
       margin 42px 0 0 0
+
+@media (max-width 768px)
+  .receipts
+    padding 22px 17px
+    &__receipt
+      & + &
+        margin 37px 0 0 0
 </style>

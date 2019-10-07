@@ -39,7 +39,6 @@ export default {
   margin 0 auto
   display flex
   flex-direction column
-  // align-items center
   padding 36px 0
   &__title
     font-size 18px
@@ -56,12 +55,14 @@ export default {
 @media (max-width 768px)
   .section
     max-width auto
-    padding 10px 8px 30px 8px
-
-  // .plans
-  //   width 100%
-  //   flex-direction column
-  //   &__plan
-  //     & + &
-  //       margin 10px 0 0 0
+    padding 13px 8px 51px 8px
+    &__title
+      font-size 15px
+      line-height 1.87
+      padding 0 17px
+    &__receipt
+      margin 13px 0 0 0
+    &__caveat
+      margin 20px 0 0 0
+      padding 0 17px
 </style>

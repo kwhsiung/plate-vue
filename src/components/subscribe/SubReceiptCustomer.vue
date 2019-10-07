@@ -104,4 +104,17 @@
     min-width 145px
   td:nth-child(2)
     width 100%
+
+@media (max-width 768px)
+  .receipt-customer
+    &__title
+      font-size 22px
+    &__subtitle
+      margin 18px 0 0 0
+
+  .table
+    td
+      padding 6px 0
+    td:first-child
+      min-width 100px
 </style>
