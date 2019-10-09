@@ -8,7 +8,7 @@
       >
         我有續訂折扣碼
       </SubInputNativeRadio>
-      <p v-show="true">
+      <p v-show="isCouponInputValid">
         折扣 80 元、加贈 1 期
       </p>
     </div>
@@ -16,6 +16,9 @@
       v-show="radioChecked"
       class="coupon__input"
       type="text"
+      required
+      :validate-error-text="'尚未填寫'"
+      v-model="couponCode"
     />
   </div>
 </template>
@@ -23,6 +26,9 @@
 <script>
 import SubInput from './SubInput.vue'
 import SubInputNativeRadio from './SubInputNativeRadio.vue'
+
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapMutations, mapGetters } = createNamespacedHelpers('subscribeMagazine')
 
 export default {
   components: {
@@ -34,7 +40,42 @@ export default {
       radioChecked: false
     }
   },
+  computed: {
+    ...mapState({
+      couponInput: state => state.coupon.input
+    }),
+    ...mapGetters({
+      isCouponInputValid: 'coupon/isInputValid'
+    }),
+    couponCode: {
+      get() {
+        return this.couponInput
+      },
+      set(value) {
+        this.SET_INPUT_COUPON(value)
+      }
+    }
+  },
+  watch: {
+    isCouponInputValid() {
+      const discount = {
+        title: '符合續訂優惠',
+        caption: '贈送 1 期'
+      }
+
+      if (this.isCouponInputValid) {
+        this.PUSH_ITEM_TO_DISCOUNT(discount)
+      } else {
+        this.REMOVE_ITEM_FROM_DISCOUNT(discount)
+      }
+    }
+  },
   methods: {
+    ...mapMutations({
+      SET_INPUT_COUPON: 'coupon/SET_INPUT',
+      PUSH_ITEM_TO_DISCOUNT: 'discounts/PUSH_ITEM',
+      REMOVE_ITEM_FROM_DISCOUNT: 'discounts/REMOVE_ITEM'
+    }),
     handleCheck(value) {
       this.radioChecked = value
     }

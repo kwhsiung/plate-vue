@@ -10,231 +10,257 @@
       class="sub__section section"
     >
       <main class="section__main main">
-        <section class="main__form-wrapper form-wrapper">
-          <header class="form-wrapper__form-header form-header">
-            <h1 class="form-header__title">
-              訂購項目
-            </h1>
-            <button
-              class="button button--normal"
-              @click="backToSubscribePlans"
+        <form
+          class="main__form form"
+          novalidate
+          @submit.prevent="handleSubmit"
+        >
+          <section class="form__form-section form-section">
+            <header class="form-section__form-header form-header">
+              <h1 class="form-header__title">
+                訂購項目
+              </h1>
+              <button
+                class="button button--normal"
+                @click.prevent="backToSubscribePlans"
+              >
+                修改
+              </button>
+            </header>
+            <div class="form-section__block">
+              <SubTableCart />
+            </div>
+            <div class="form-section__block">
+              <SubInputCoupon />
+            </div>
+          </section>
+          <section class="form__form-section form-section">
+            <header class="form-section__form-header form-header">
+              <h1 class="form-header__title">
+                訂購人
+              </h1>
+            </header>
+            <div class="form-section__block">
+              <label class="form-section__label">
+                姓名
+                <SubInput
+                  class="form-section__input form-section__input--m"
+                  required
+                  :validate-error-text="'尚未填寫'"
+                />
+              </label>
+            </div>
+            <div class="form-section__block">
+              <label class="form-section__label">
+                手機
+                <SubInput
+                  class="form-section__input form-section__input--m"
+                  required
+                />
+              </label>
+              <label class="form-section__label">
+                市話（非必填）
+                <div class="form-section__inner-label-wrapper">
+                  <SubInput
+                    class="form-section__input form-section__input--s"
+                  />
+                  <span>-</span>
+                  <SubInput
+                    class="form-section__input form-section__input--xxs"
+                    placeholder="EXT"
+                  />
+                </div>
+              </label>
+            </div>
+            <div class="form-section__block">
+              <label class="form-section__label">
+                通訊地址
+                <SubInput
+                  class="form-section__input form-section__input--l"
+                  required
+                />
+              </label>
+            </div>
+            <div class="form-section__block">
+              <label class="form-section__label">
+                電子信箱
+                <SubInput
+                  class="form-section__input form-section__input--l"
+                  required
+                />
+              </label>
+            </div>
+          </section>
+          <section class="form__form-section form-section">
+            <header class="form-section__form-header form-header">
+              <h1 class="form-header__title">
+                收件人
+              </h1>
+            </header>
+            <div class="form-section__block">
+              <SubInputNativeCheckbox>
+                同訂購人資訊
+              </SubInputNativeCheckbox>
+            </div>
+            <div class="form-section__block">
+              <label class="form-section__label">
+                姓名
+                <SubInput
+                  class="form-section__input form-section__input--m"
+                  required
+                />
+              </label>
+            </div>
+            <div class="form-section__block">
+              <label class="form-section__label">
+                手機
+                <SubInput
+                  class="form-section__input form-section__input--m"
+                  required
+                />
+              </label>
+              <label class="form-section__label">
+                市話（非必填）
+                <div class="form-section__inner-label-wrapper">
+                  <SubInput
+                    class="form-section__input form-section__input--s"
+                  />
+                  <span>-</span>
+                  <SubInput
+                    class="form-section__input form-section__input--xxs"
+                    placeholder="EXT"
+                  />
+                </div>
+              </label>
+            </div>
+            <div class="form-section__block">
+              <label class="form-section__label">
+                通訊地址
+                <SubInput
+                  class="form-section__input form-section__input--l"
+                  required
+                />
+              </label>
+            </div>
+            <div class="form-section__block">
+              <label class="form-section__label">
+                電子信箱
+                <SubInput
+                  class="form-section__input form-section__input--l"
+                  required
+                />
+              </label>
+            </div>
+            <div class="form-section__block">
+              <label class="form-section__label">
+                派送備註
+                <SubInput
+                  class="form-section__input form-section__input--l"
+                />
+              </label>
+            </div>
+          </section>
+          <section class="form__form-section form-section">
+            <header class="form-section__form-header form-header">
+              <h1 class="form-header__title">
+                寄送方式
+              </h1>
+            </header>
+            <div class="form-section__block">
+              <p class="form-section__paragraph">
+                雜誌每週三出刊，週五前可收到雜誌。欲更改收件地址，請於上班時間來電告知。
+              </p>
+            </div>
+            <div class="form-section__block form-section__block--more-margin">
+              <SubInputNativeRadio>
+                限時專送 NT$ 0 / 期
+              </SubInputNativeRadio>
+            </div>
+            <div class="form-section__block form-section__block--more-margin">
+              <SubInputNativeRadio>
+                限時掛號 NT$ 20 / 期
+              </SubInputNativeRadio>
+            </div>
+          </section>
+          <section class="form__form-section form-section">
+            <header class="form-section__form-header form-header">
+              <h1 class="form-header__title">
+                電子發票
+              </h1>
+            </header>
+            <div class="form-section__block">
+              <p class="form-section__paragraph">
+                發票將於完成訂購後 7 個工作天內寄達。
+              </p>
+            </div>
+            <div class="form-section__block form-section__block--more-margin">
+              <SubInputLovecode />
+            </div>
+            <div class="form-section__block form-section__block--more-margin">
+              <SubInputInvoiceDuplicate />
+            </div>
+            <div class="form-section__block form-section__block--more-margin">
+              <SubInputInvoiceTriplicate />
+            </div>
+          </section>
+          <section class="form__form-section form-section">
+            <div class="form-section__block">
+              <SubInputNativeCheckbox>
+                我已閱讀並同意：
+              </SubInputNativeCheckbox>
+            </div>
+            <div class="form-section__block">
+              <p class="form-section__paragraph form-section__paragraph--indent">
+                鏡週刊於行銷目的範圍內得永久彙集。處理及利用本人填寫之訂單資料，並得利用前述資料而為本公司在台灣地區對本人發送活動、服務訊息。本公司對所彙集資料依法保密。本人如有請求停止彙集、處理、利用之需要可書面或致電訂戶組處理 (02) 6636-6800。
+              </p>
+            </div>
+          </section>
+          <section class="form__form-section form-section">
+            <header class="form-section__form-header form-header">
+              <h1 class="form-header__title">
+                信用卡
+              </h1>
+            </header>
+            <div class="form-section__block">
+              <SubCreditCardLogos />
+            </div>
+            <div class="form-section__block form-section__block--more-margin">
+              <label class="form-section__label">
+                卡號
+                <SubInput
+                  class="form-section__input form-section__input--l"
+                  placeholder="0000 0000 0000 0000"
+                  required
+                />
+              </label>
+            </div>
+            <div class="form-section__block form-section__block--row-mobile">
+              <label class="form-section__label">
+                有效期限
+                <SubInput
+                  class="form-section__input form-section__input--xs"
+                  placeholder="MM / YY"
+                  required
+                />
+              </label>
+              <label class="form-section__label">
+                卡片後三碼
+                <SubInput
+                  class="form-section__input form-section__input--xs"
+                  placeholder="CVV"
+                  required
+                />
+              </label>
+            </div>
+          </section>
+          <section class="form__form-section form-section">
+            <SubButtonSubmit
+              class="button button--submit"
             >
-              修改
-            </button>
-          </header>
-          <div class="form-wrapper__block">
-            <SubTableCart />
-          </div>
-          <div class="form-wrapper__block">
-            <SubInputCoupon />
-          </div>
-        </section>
-        <section class="main__form-wrapper form-wrapper">
-          <header class="form-wrapper__form-header form-header">
-            <h1 class="form-header__title">
-              訂購人
-            </h1>
-          </header>
-          <div class="form-wrapper__block">
-            <label class="form-wrapper__label">
-              姓名
-              <SubInput
-                class="form-wrapper__input form-wrapper__input--m"
-              />
-            </label>
-          </div>
-          <div class="form-wrapper__block">
-            <label class="form-wrapper__label">
-              手機
-              <SubInput
-                class="form-wrapper__input form-wrapper__input--m"
-              />
-            </label>
-            <label class="form-wrapper__label">
-              市話（非必填）
-              <div class="form-wrapper__inner-label-wrapper">
-                <SubInput
-                  class="form-wrapper__input form-wrapper__input--s"
-                />
-                <span>-</span>
-                <SubInput
-                  class="form-wrapper__input form-wrapper__input--xxs"
-                  placeholder="EXT"
-                />
-              </div>
-            </label>
-          </div>
-          <div class="form-wrapper__block">
-            <label class="form-wrapper__label">
-              通訊地址
-              <SubInput
-                class="form-wrapper__input form-wrapper__input--l"
-              />
-            </label>
-          </div>
-          <div class="form-wrapper__block">
-            <label class="form-wrapper__label">
-              電子信箱
-              <SubInput
-                class="form-wrapper__input form-wrapper__input--l"
-              />
-            </label>
-          </div>
-        </section>
-        <section class="main__form-wrapper form-wrapper">
-          <header class="form-wrapper__form-header form-header">
-            <h1 class="form-header__title">
-              收件人
-            </h1>
-          </header>
-          <div class="form-wrapper__block">
-            <SubInputNativeCheckbox>
-              同訂購人資訊
-            </SubInputNativeCheckbox>
-          </div>
-          <div class="form-wrapper__block">
-            <label class="form-wrapper__label">
-              姓名
-              <SubInput
-                class="form-wrapper__input form-wrapper__input--m"
-              />
-            </label>
-          </div>
-          <div class="form-wrapper__block">
-            <label class="form-wrapper__label">
-              手機
-              <SubInput
-                class="form-wrapper__input form-wrapper__input--m"
-              />
-            </label>
-            <label class="form-wrapper__label">
-              市話（非必填）
-              <div class="form-wrapper__inner-label-wrapper">
-                <SubInput
-                  class="form-wrapper__input form-wrapper__input--s"
-                />
-                <span>-</span>
-                <SubInput
-                  class="form-wrapper__input form-wrapper__input--xxs"
-                  placeholder="EXT"
-                />
-              </div>
-            </label>
-          </div>
-          <div class="form-wrapper__block">
-            <label class="form-wrapper__label">
-              通訊地址
-              <SubInput
-                class="form-wrapper__input form-wrapper__input--l"
-              />
-            </label>
-          </div>
-          <div class="form-wrapper__block">
-            <label class="form-wrapper__label">
-              電子信箱
-              <SubInput
-                class="form-wrapper__input form-wrapper__input--l"
-              />
-            </label>
-          </div>
-        </section>
-        <section class="main__form-wrapper form-wrapper">
-          <header class="form-wrapper__form-header form-header">
-            <h1 class="form-header__title">
-              寄送方式
-            </h1>
-          </header>
-          <div class="form-wrapper__block">
-            <p class="form-wrapper__paragraph">
-              雜誌每週三出刊，週五前可收到雜誌。欲更改收件地址，請於上班時間來電告知。
-            </p>
-          </div>
-          <div class="form-wrapper__block form-wrapper__block--more-margin">
-            <SubInputNativeRadio>
-              限時專送 NT$ 0 / 期
-            </SubInputNativeRadio>
-          </div>
-          <div class="form-wrapper__block form-wrapper__block--more-margin">
-            <SubInputNativeRadio>
-              限時掛號 NT$ 20 / 期
-            </SubInputNativeRadio>
-          </div>
-        </section>
-        <section class="main__form-wrapper form-wrapper">
-          <header class="form-wrapper__form-header form-header">
-            <h1 class="form-header__title">
-              電子發票
-            </h1>
-          </header>
-          <div class="form-wrapper__block">
-            <p class="form-wrapper__paragraph">
-              發票將於完成訂購後 7 個工作天內寄達。
-            </p>
-          </div>
-          <div class="form-wrapper__block form-wrapper__block--more-margin">
-            <SubInputLovecode />
-          </div>
-          <div class="form-wrapper__block form-wrapper__block--more-margin">
-            <SubInputInvoiceDuplicate />
-          </div>
-          <div class="form-wrapper__block form-wrapper__block--more-margin">
-            <SubInputInvoiceTriplicate />
-          </div>
-        </section>
-        <section class="main__form-wrapper form-wrapper">
-          <div class="form-wrapper__block">
-            <SubInputNativeCheckbox>
-              我已閱讀並同意：
-            </SubInputNativeCheckbox>
-          </div>
-          <div class="form-wrapper__block">
-            <p class="form-wrapper__paragraph form-wrapper__paragraph--indent">
-              鏡週刊於行銷目的範圍內得永久彙集。處理及利用本人填寫之訂單資料，並得利用前述資料而為本公司在台灣地區對本人發送活動、服務訊息。本公司對所彙集資料依法保密。本人如有請求停止彙集、處理、利用之需要可書面或致電訂戶組處理 (02) 6636-6800。
-            </p>
-          </div>
-        </section>
-        <section class="main__form-wrapper form-wrapper">
-          <header class="form-wrapper__form-header form-header">
-            <h1 class="form-header__title">
-              信用卡
-            </h1>
-          </header>
-          <div class="form-wrapper__block">
-            <SubCreditCardLogos />
-          </div>
-          <div class="form-wrapper__block form-wrapper__block--more-margin">
-            <label class="form-wrapper__label">
-              卡號
-              <SubInput
-                class="form-wrapper__input form-wrapper__input--l"
-                placeholder="0000 0000 0000 0000"
-              />
-            </label>
-          </div>
-          <div class="form-wrapper__block form-wrapper__block--row-mobile">
-            <label class="form-wrapper__label">
-              有效期限
-              <SubInput
-                class="form-wrapper__input form-wrapper__input--xs"
-                placeholder="MM / YY"
-              />
-            </label>
-            <label class="form-wrapper__label">
-              卡片後三碼
-              <SubInput
-                class="form-wrapper__input form-wrapper__input--xs"
-                placeholder="CVV"
-              />
-            </label>
-          </div>
-        </section>
-        <section class="main__form-wrapper form-wrapper">
-          <SubButtonSubmit
-            class="button button--submit"
-          >
-            確認訂購
-          </SubButtonSubmit>
-        </section>
+              確認訂購
+            </SubButtonSubmit>
+          </section>
+        </form>
       </main>
       <aside
         :class="[
@@ -257,14 +283,11 @@
           ]"
         />
         <SubHintDiscount
-          class="aside__item"
-          :title="'符合一年方案優惠'"
-          :caption="'贈送 5 期'"
-        />
-        <SubHintDiscount
-          class="aside__item"
-          :title="'符合續訂優惠'"
-          :caption="'贈送 1 期'"
+          class="aside__item aside__item--will-fade-in-up"
+          v-for="(item, i) in discounts"
+          :key="i"
+          :title="item.title"
+          :caption="item.caption"
         />
       </aside>
     </section>
@@ -287,6 +310,9 @@ import SubButtonSubmit from 'src/components/subscribe/SubButtonSubmit.vue'
 import SubHintPriceTotal from 'src/components/subscribe/SubHintPriceTotal.vue'
 import SubHintDiscount from 'src/components/subscribe/SubHintDiscount.vue'
 import SubFooter from 'src/components/subscribe/SubFooter.vue'
+
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapMutations } = createNamespacedHelpers('subscribeMagazine')
 
 const mixinFixedAside = {
   data() {
@@ -335,15 +361,61 @@ export default {
     SubFooter
   },
   mixins: [ mixinFixedAside ],
+  computed: {
+    ...mapState({
+      hadSubmitClicked: state => state.ui.hadSubmitClicked,
+      discounts: state => state.discounts.items
+    })
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      switch (vm.$route.params.yearDuration) {
+        case '1':
+          vm.PUSH_ITEM_TO_DISCOUNT({
+            title: '符合一年方案優惠',
+            caption: '贈送 5 期'
+          })
+          break
+        case '2':
+          vm.PUSH_ITEM_TO_DISCOUNT({
+            title: '符合二年方案優惠',
+            caption: '贈送 10 期'
+          })
+          break
+        default:
+          break
+      }
+    })
+  },
   methods: {
     backToSubscribePlans() {
-      this.$router.push('/subscribe-plans')
+      this.$router.push('/subscribe-magazine-plans')
+    },
+
+    ...mapMutations({
+      TOGGLE_SUBMIT_STATE_ON: 'ui/TOGGLE_SUBMIT_STATE_ON',
+      PUSH_ITEM_TO_DISCOUNT: 'discounts/PUSH_ITEM'
+    }),
+    handleSubmit() {
+      this.TOGGLE_SUBMIT_STATE_ON()
     }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 .section
   max-width 990px
   margin 0 auto
@@ -358,19 +430,28 @@ export default {
 
 .main
   width 550px
-  &__form-wrapper
-    & + &
-      margin 42px 0 0 0
 
 .aside
   width 400px
   &__item
+    &--will-fade-in-up
+      opacity 0
+      animation-name fadeInUp
+      animation-duration .5s
+      animation-delay .5s
+      animation-timing-function ease-out
+      animation-fill-mode forwards
     & + &
       margin 10px 0 0 0
 
-.form-wrapper
+.form
+  &__form-section
+    & + &
+      margin 42px 0 0 0
+
+.form-section
   &__form-header
-    & + .form-wrapper__block
+    & + .form-section__block
       margin 20px 0 0 0
   &__block
     margin 10px 0 0 0
@@ -455,13 +536,13 @@ export default {
   .aside
     width 100%
 
-  .form-wrapper
+  .form-section
     &__block
       flex-direction column
       align-items flex-start
       &--row-mobile
         flex-direction row
-        .form-wrapper__label + .form-wrapper__label
+        .form-section__label + .form-section__label
           margin 0 0 0 50px !important
     &__label
       font-size 15px

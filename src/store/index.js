@@ -33,12 +33,17 @@ import { fetchActivities,
   logClient } from './api'
 import { OATH_PLAYLIST } from '../constants'
 
+import subscribeMagazine from './modules/subscribeMagazine'
+
 Vue.use(Vuex)
 
 const { DFPID, FB_APP_ID, FB_PAGES_ID } = config
 
 export function createStore () {
   return new Vuex.Store({
+    modules: {
+      subscribeMagazine
+    },
     state: {
       activities: {},
       articles: {},
