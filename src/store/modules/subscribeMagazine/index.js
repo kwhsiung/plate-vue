@@ -1,4 +1,5 @@
 import hadSubmitClicked from './modules/hadSubmitClicked'
+import cart from './modules/cart'
 import discounts from './modules/discounts'
 import coupon from './modules/coupon'
 
@@ -8,6 +9,7 @@ export default {
     ui: {
       ...hadSubmitClicked
     },
+    cart,
     discounts,
     coupon
   },

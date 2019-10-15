@@ -369,16 +369,31 @@ export default {
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
+      vm.CLEAR_ITEMS_FROM_CART()
+      vm.CLEAR_ITEMS_FROM_DISCOUNT()
+
       switch (vm.$route.params.yearDuration) {
         case '1':
+          vm.PUSH_ITEM_TO_CART({
+            title: '一年 52 期，加贈 5 期方案',
+            quantity: 1,
+            unitPrice: 2880
+          })
           vm.PUSH_ITEM_TO_DISCOUNT({
             title: '符合一年方案優惠',
+            value: null,
             caption: '贈送 5 期'
           })
           break
         case '2':
+          vm.PUSH_ITEM_TO_CART({
+            title: '二年份 104 期，加贈 10 期方案',
+            quantity: 1,
+            unitPrice: 5280
+          })
           vm.PUSH_ITEM_TO_DISCOUNT({
             title: '符合二年方案優惠',
+            value: null,
             caption: '贈送 10 期'
           })
           break
@@ -394,7 +409,10 @@ export default {
 
     ...mapMutations({
       TOGGLE_SUBMIT_STATE_ON: 'ui/TOGGLE_SUBMIT_STATE_ON',
-      PUSH_ITEM_TO_DISCOUNT: 'discounts/PUSH_ITEM'
+      PUSH_ITEM_TO_CART: 'cart/PUSH_ITEM',
+      CLEAR_ITEMS_FROM_CART: 'cart/CLEAR_ITEMS',
+      PUSH_ITEM_TO_DISCOUNT: 'discounts/PUSH_ITEM',
+      CLEAR_ITEMS_FROM_DISCOUNT: 'discounts/CLEAR_ITEMS',
     }),
     handleSubmit() {
       this.TOGGLE_SUBMIT_STATE_ON()

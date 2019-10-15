@@ -8,14 +8,52 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>一年 52 期，加贈 5 期方案</td>
-        <td>1</td>
-        <td>NT$ 2,880</td>
+      <tr
+        v-for="item in cartItems"
+        :key="item.title"
+      >
+        <td v-text="item.title" />
+        <td>
+          <SubInputCounter
+            @updateValue="v => handleUpdateValue(v, item.title)"
+          />
+        </td>
+        <td>NT$ {{ item.unitPrice | toLocaleString }}</td>
       </tr>
     </tbody>
   </table>
 </template>
+
+<script>
+import SubInputCounter from './SubInputCounter.vue'
+
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapMutations } = createNamespacedHelpers('subscribeMagazine')
+
+export default {
+  filters: {
+    toLocaleString(value) {
+      return value.toLocaleString()
+    }
+  },
+  components: {
+    SubInputCounter
+  },
+  computed: {
+    ...mapState({
+      cartItems: state => state.cart.items
+    })
+  },
+  methods: {
+    ...mapMutations({
+      UPDATE_ITEM_QUANTITY: 'cart/UPDATE_ITEM_QUANTITY'
+    }),
+    handleUpdateValue(value, itemTitle) {
+      this.UPDATE_ITEM_QUANTITY({ title: itemTitle, quantity: value })
+    }
+  }
+}
+</script>
 
 <style lang="stylus" scoped>
 table

@@ -60,6 +60,7 @@ export default {
     isCouponInputValid() {
       const discount = {
         title: '符合續訂優惠',
+        value: -80,
         caption: '贈送 1 期'
       }
 
