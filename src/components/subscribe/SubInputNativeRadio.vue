@@ -3,8 +3,14 @@
     <slot />
     <input
       type="radio"
-      :checked="checked"
-      @change="$emit('change', !checked)"
+      v-bind="{
+        ...$attrs,
+        value: radioValue
+      }"
+      v-on="{
+        ...$listeners,
+        input: handleInput
+      }"
     >
     <span class="checkmark" />
   </label>
@@ -12,10 +18,15 @@
 
 <script>
 export default {
+  inheritAttrs: false,
   props: {
-    checked: {
-      type: Boolean,
-      default: false
+    radioValue: {
+      type: null
+    }
+  },
+  methods: {
+    handleInput(e) {
+      this.$emit('input', e.target.value)
     }
   }
 }

@@ -1,13 +1,13 @@
 <template>
   <div class="coupon">
     <div class="coupon__radio-wrapper radio-wrapper">
-      <SubInputNativeRadio
+      <SubInputNativeCheckbox
         class="radio-wrapper__radio"
         :checked="radioChecked"
         @change="handleCheck"
       >
         我有續訂折扣碼
-      </SubInputNativeRadio>
+      </SubInputNativeCheckbox>
       <p v-show="isCouponInputValid">
         折扣 80 元、加贈 1 期
       </p>
@@ -17,8 +17,7 @@
       class="coupon__input"
       type="text"
       pattern="^MR\d{8}$"
-      required
-      :validate-error-text="'尚未填寫'"
+      :required="radioChecked"
       v-model="couponCode"
     />
   </div>
@@ -26,7 +25,7 @@
 
 <script>
 import SubInput from './SubInput.vue'
-import SubInputNativeRadio from './SubInputNativeRadio.vue'
+import SubInputNativeCheckbox from './SubInputNativeCheckbox.vue'
 
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapMutations, mapGetters } = createNamespacedHelpers('subscribeMagazine')
@@ -34,7 +33,7 @@ const { mapState, mapMutations, mapGetters } = createNamespacedHelpers('subscrib
 export default {
   components: {
     SubInput,
-    SubInputNativeRadio
+    SubInputNativeCheckbox
   },
   data() {
     return {

@@ -182,6 +182,8 @@
                 派送備註
                 <SubInput
                   class="form-section__input form-section__input--l"
+                  type="text"
+                  v-model="receiverNote"
                 />
               </label>
             </div>
@@ -198,12 +200,22 @@
               </p>
             </div>
             <div class="form-section__block form-section__block--more-margin">
-              <SubInputNativeRadio>
+              <SubInputNativeRadio
+                name="delivery"
+                :radio-value="'normal'"
+                required
+                v-model="delivery"
+              >
                 限時專送 NT$ 0 / 期
               </SubInputNativeRadio>
             </div>
             <div class="form-section__block form-section__block--more-margin">
-              <SubInputNativeRadio>
+              <SubInputNativeRadio
+                name="delivery"
+                :radio-value="'registered'"
+                required
+                v-model="delivery"
+              >
                 限時掛號 NT$ 20 / 期
               </SubInputNativeRadio>
             </div>
@@ -413,14 +425,47 @@ const getMixinCustomer = () => {
           }
         }
         return map
-      }, {})
+      }, {}),
+      receiverNote: {
+        get() {
+          return this.receiverData.note
+        },
+        set(value) {
+          this.SET_VALUE_CUSTOMER({ role: 'receiver', key: 'note', value })
+        }
+      }
     },
     methods: {
       ...mapMutations({
         SET_VALUE_CUSTOMER: 'customer/SET_VALUE',
         TOGGLE_SYNC_CUSTOMER: 'customer/TOGGLE_SYNC'
       }),
+      handleSyncCustomerCheck(value) {
+        this.TOGGLE_SYNC_CUSTOMER(value)
+      }
     }
+  }
+}
+
+const mixinDelivery = {
+  computed: {
+    ...mapState({
+      pickedDelivery: state => state.delivery.picked
+    }),
+
+    delivery: {
+      get() {
+        return this.pickedDelivery
+      },
+      set(value) {
+        this.SET_VALUE_DELIVERY(value)
+      }
+    }
+  },
+  methods: {
+    ...mapMutations({
+      SET_VALUE_DELIVERY: 'delivery/SET_VALUE',
+    })
   }
 }
 
@@ -443,7 +488,8 @@ export default {
   },
   mixins: [
     mixinFixedAside,
-    getMixinCustomer()
+    getMixinCustomer(),
+    mixinDelivery
   ],
   computed: {
     ...mapState({
@@ -500,9 +546,6 @@ export default {
     }),
     handleSubmit() {
       this.TOGGLE_SUBMIT_STATE_ON()
-    },
-    handleSyncCustomerCheck(value) {
-      this.TOGGLE_SYNC_CUSTOMER(value)
     }
   }
 }

@@ -16,7 +16,8 @@ export default {
         phoneLocal: '',
         phoneLocalExt: '',
         address: '',
-        email: ''
+        email: '',
+        note: ''
       },
       isSyncWithSubscriber: false
     }
