@@ -3,8 +3,10 @@
     <div class="invoice-duplicate__radio-wrapper radio-wrapper">
       <SubInputNativeRadio
         class="radio-wrapper__radio"
-        :checked="radioChecked"
-        @change="handleCheck"
+        name="invoice"
+        required
+        :radio-value="'duplicate'"
+        v-model="invoice"
       >
         二聯式發票（含載具）
       </SubInputNativeRadio>
@@ -24,6 +26,7 @@
       v-show="radioChecked"
       class="invoice-duplicate__input"
       type="text"
+      :required="radioChecked"
       placeholder="xxxxxx"
     />
   </div>
@@ -34,20 +37,50 @@ import SubInput from './SubInput.vue'
 import SubInputNativeRadio from './SubInputNativeRadio.vue'
 import SubInputNativeSelect from './SubInputNativeSelect.vue'
 
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapMutations } = createNamespacedHelpers('subscribeMagazine')
+
+const mixinInvoice = {
+  computed: {
+    ...mapState({
+      pickedInvoice: state => state.invoice.picked
+    }),
+
+    invoice: {
+      get() {
+        return this.pickedInvoice
+      },
+      set(value) {
+        this.SET_VALUE_INVOICE(value)
+      }
+    }
+  },
+  methods: {
+    ...mapMutations({
+      SET_VALUE_INVOICE: 'invoice/SET_VALUE',
+    })
+  }
+}
+
 export default {
   components: {
     SubInput,
     SubInputNativeRadio,
     SubInputNativeSelect
   },
+  mixins: [ mixinInvoice ],
   data() {
     return {
-      radioChecked: false,
       options: [
         'Email 載具',
         '手機條碼載具',
         '自然人憑證條碼'
       ]
+    }
+  },
+  computed: {
+    radioChecked() {
+      return this.pickedInvoice === 'duplicate'
     }
   },
   methods: {
