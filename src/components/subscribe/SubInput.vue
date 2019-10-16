@@ -17,6 +17,7 @@
     <!-- v-bind: https://vuejs.org/v2/api/#v-bind -->
     <!-- v-on: https://vuejs.org/v2/api/#v-on -->
     <input
+      ref="input"
       :class="{
         'show-validate': shouldShowValidateResult
       }"
@@ -31,7 +32,7 @@
     >
     <p
       class="validate-error-text"
-      v-text="validateErrorText"
+      v-text="invalidHint"
     />
   </div>
 </template>
@@ -45,10 +46,13 @@ export default {
   props: {
     value: {
       type: null
-    },
-    validateErrorText: {
-      type: String,
-      default: '驗證錯誤'
+    }
+  },
+  data() {
+    return {
+      invalidHintValueMissing: '此為必填欄位',
+      invalidHintDefault: '格式錯誤',
+      invalidHint: ''
     }
   },
   computed: {
@@ -56,9 +60,36 @@ export default {
       shouldShowValidateResult: state => state.ui.hadSubmitClicked
     })
   },
+  watch: {
+    value() {
+      this.$nextTick(() => {
+        this.invalidHint = this.getInvalidHint()
+      })
+    },
+    shouldShowValidateResult(value) {
+      if (value) {
+        this.invalidHint = this.getInvalidHint()
+      }
+    }
+  },
   methods: {
     handleInput(e) {
       this.$emit('input', e.target.value)
+    },
+    getInvalidHint() {
+      if (this.shouldShowValidateResult) {
+        const input = this.$refs.input
+        const { valid, valueMissing } = input.validity
+        if (!valid && valueMissing) {
+          return this.invalidHintValueMissing
+        } else if (!valid) {
+          return this.invalidHintDefault
+        } else {
+          return ''
+        }
+      } else {
+        return ''
+      }
     }
   }
 }
@@ -92,4 +123,14 @@ export default {
       border 2px solid rgba(6, 79, 119, 0.5) !important
     &::placeholder
       color #9b9b9b
+    // Hide the HTML5 number input’s spin box
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        /* display: none; <- Crashes Chrome on hover */
+        -webkit-appearance: none;
+        margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+    }
+    &[type=number] {
+        -moz-appearance: textfield; /* Firefox */
+    }
 </style>

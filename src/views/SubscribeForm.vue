@@ -45,8 +45,9 @@
                 姓名
                 <SubInput
                   class="form-section__input form-section__input--m"
+                  type="text"
                   required
-                  :validate-error-text="'尚未填寫'"
+                  v-model="subscriberName"
                 />
               </label>
             </div>
@@ -55,7 +56,9 @@
                 手機
                 <SubInput
                   class="form-section__input form-section__input--m"
+                  type="tel"
                   required
+                  v-model="subscriberPhone"
                 />
               </label>
               <label class="form-section__label">
@@ -63,11 +66,15 @@
                 <div class="form-section__inner-label-wrapper">
                   <SubInput
                     class="form-section__input form-section__input--s"
+                    type="tel"
+                    v-model="subscriberPhoneLocal"
                   />
                   <span>-</span>
                   <SubInput
                     class="form-section__input form-section__input--xxs"
+                    type="number"
                     placeholder="EXT"
+                    v-model="subscriberPhoneLocalExt"
                   />
                 </div>
               </label>
@@ -77,7 +84,9 @@
                 通訊地址
                 <SubInput
                   class="form-section__input form-section__input--l"
+                  type="text"
                   required
+                  v-model="subscriberAddress"
                 />
               </label>
             </div>
@@ -86,7 +95,9 @@
                 電子信箱
                 <SubInput
                   class="form-section__input form-section__input--l"
+                  type="email"
                   required
+                  v-model="subscriberEmail"
                 />
               </label>
             </div>
@@ -98,7 +109,10 @@
               </h1>
             </header>
             <div class="form-section__block">
-              <SubInputNativeCheckbox>
+              <SubInputNativeCheckbox
+                :checked="isSyncWithSubscriber"
+                @change="handleSyncCustomerCheck"
+              >
                 同訂購人資訊
               </SubInputNativeCheckbox>
             </div>
@@ -107,7 +121,9 @@
                 姓名
                 <SubInput
                   class="form-section__input form-section__input--m"
+                  type="text"
                   required
+                  v-model="receiverName"
                 />
               </label>
             </div>
@@ -116,7 +132,9 @@
                 手機
                 <SubInput
                   class="form-section__input form-section__input--m"
+                  type="tel"
                   required
+                  v-model="receiverPhone"
                 />
               </label>
               <label class="form-section__label">
@@ -124,11 +142,15 @@
                 <div class="form-section__inner-label-wrapper">
                   <SubInput
                     class="form-section__input form-section__input--s"
+                    type="tel"
+                    v-model="receiverPhoneLocal"
                   />
                   <span>-</span>
                   <SubInput
                     class="form-section__input form-section__input--xxs"
+                    type="number"
                     placeholder="EXT"
+                    v-model="receiverPhoneLocalExt"
                   />
                 </div>
               </label>
@@ -138,7 +160,9 @@
                 通訊地址
                 <SubInput
                   class="form-section__input form-section__input--l"
+                  type="text"
                   required
+                  v-model="receiverAddress"
                 />
               </label>
             </div>
@@ -147,7 +171,9 @@
                 電子信箱
                 <SubInput
                   class="form-section__input form-section__input--l"
+                  type="email"
                   required
+                  v-model="receiverEmail"
                 />
               </label>
             </div>
@@ -311,6 +337,8 @@ import SubHintPriceTotal from 'src/components/subscribe/SubHintPriceTotal.vue'
 import SubHintDiscount from 'src/components/subscribe/SubHintDiscount.vue'
 import SubFooter from 'src/components/subscribe/SubFooter.vue'
 
+import _ from 'lodash'
+
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapMutations } = createNamespacedHelpers('subscribeMagazine')
 
@@ -343,6 +371,59 @@ const mixinFixedAside = {
   }
 }
 
+const getMixinCustomer = () => {
+  const keys = [
+    'name',
+    'phone',
+    'phoneLocal',
+    'phoneLocalExt',
+    'address',
+    'email'
+  ]
+  return {
+    computed: {
+      ...mapState({
+        subscriberData: state => state.customer.subscriber,
+        receiverData: state => state.customer.receiver,
+        isSyncWithSubscriber: state => state.customer.isSyncWithSubscriber
+      }),
+  
+      ...keys.reduce((map, key) => {
+        const name = _.camelCase(`subscriber ${key}`)
+        map[name] = {
+          get() {
+            return this.subscriberData[key]
+          },
+          set(value) {
+            this.SET_VALUE_CUSTOMER({ role: 'subscriber', key, value })
+          }
+        }
+        return map
+      }, {}),
+      ...keys.reduce((map, key) => {
+        const name = _.camelCase(`receiver ${key}`)
+        map[name] = {
+          get() {
+            const data = this.isSyncWithSubscriber ? this.subscriberData : this.receiverData
+            return data[key]
+          },
+          set(value) {
+            const role = this.isSyncWithSubscriber ? 'subscriber' : 'receiver'
+            this.SET_VALUE_CUSTOMER({ role, key, value })
+          }
+        }
+        return map
+      }, {})
+    },
+    methods: {
+      ...mapMutations({
+        SET_VALUE_CUSTOMER: 'customer/SET_VALUE',
+        TOGGLE_SYNC_CUSTOMER: 'customer/TOGGLE_SYNC'
+      }),
+    }
+  }
+}
+
 export default {
   components: {
     SubHeader,
@@ -360,7 +441,10 @@ export default {
     SubHintDiscount,
     SubFooter
   },
-  mixins: [ mixinFixedAside ],
+  mixins: [
+    mixinFixedAside,
+    getMixinCustomer()
+  ],
   computed: {
     ...mapState({
       hadSubmitClicked: state => state.ui.hadSubmitClicked,
@@ -416,6 +500,9 @@ export default {
     }),
     handleSubmit() {
       this.TOGGLE_SUBMIT_STATE_ON()
+    },
+    handleSyncCustomerCheck(value) {
+      this.TOGGLE_SYNC_CUSTOMER(value)
     }
   }
 }

@@ -16,6 +16,7 @@
       v-show="radioChecked"
       class="coupon__input"
       type="text"
+      pattern="^MR\d{8}$"
       required
       :validate-error-text="'尚未填寫'"
       v-model="couponCode"
