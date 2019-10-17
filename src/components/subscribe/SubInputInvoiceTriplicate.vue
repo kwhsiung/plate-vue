@@ -6,7 +6,7 @@
         name="invoice"
         required
         :radio-value="'triplicate'"
-        v-model="invoice"
+        v-model="pickedInvoiceType"
       >
         三聯式發票
       </SubInputNativeRadio>
@@ -17,6 +17,7 @@
       type="text"
       :required="radioChecked"
       placeholder="請輸入抬頭"
+      v-model="inputTriplicateTitle"
     />
     <SubInput
       v-show="radioChecked"
@@ -24,6 +25,7 @@
       type="text"
       :required="radioChecked"
       placeholder="請輸入統一編號 8 位數字"
+      v-model="inputTriplicateTaxId"
     />
   </div>
 </template>
@@ -35,43 +37,40 @@ import SubInputNativeRadio from './SubInputNativeRadio.vue'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapMutations } = createNamespacedHelpers('subscribeMagazine')
 
-const mixinInvoice = {
-  computed: {
-    ...mapState({
-      pickedInvoice: state => state.invoice.picked
-    }),
-
-    invoice: {
-      get() {
-        return this.pickedInvoice
-      },
-      set(value) {
-        this.SET_VALUE_INVOICE(value)
-      }
-    }
-  },
-  methods: {
-    ...mapMutations({
-      SET_VALUE_INVOICE: 'invoice/SET_VALUE',
-    })
-  }
-}
+import mixinInvoice from './mixins/invoice'
 
 export default {
   components: {
     SubInput,
     SubInputNativeRadio
   },
-  mixins: [ mixinInvoice ],
+  mixins: [ mixinInvoice('triplicate') ],
   computed: {
-    radioChecked() {
-      return this.pickedInvoice === 'triplicate'
+    ...mapState({
+      inputTriplicateTitleStore: state => state.invoice.inputTriplicateTitle,
+      inputTriplicateTaxIdStore: state => state.invoice.inputTriplicateTaxId
+    }),
+    inputTriplicateTitle: {
+      get() {
+        return this.inputTriplicateTitleStore
+      },
+      set(value) {
+        this.SET_VALUE_INVOICE({ key: 'inputTriplicateTitle', value })
+      }
+    },
+    inputTriplicateTaxId: {
+      get() {
+        return this.inputTriplicateTaxIdStore
+      },
+      set(value) {
+        this.SET_VALUE_INVOICE({ key: 'inputTriplicateTaxId', value })
+      }
     }
   },
   methods: {
-    handleCheck(value) {
-      this.radioChecked = value
-    }
+    ...mapMutations({
+      SET_VALUE_INVOICE: 'invoice/SET_VALUE'
+    })
   }
 }
 </script>

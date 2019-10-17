@@ -3,7 +3,7 @@
     <div class="coupon__radio-wrapper radio-wrapper">
       <SubInputNativeCheckbox
         class="radio-wrapper__radio"
-        :checked="radioChecked"
+        :checked="couponChecked"
         @change="handleCheck"
       >
         我有續訂折扣碼
@@ -13,12 +13,12 @@
       </p>
     </div>
     <SubInput
-      v-show="radioChecked"
+      v-show="couponChecked"
       class="coupon__input"
       type="text"
       pattern="^MR\d{8}$"
-      :required="radioChecked"
-      v-model="couponCode"
+      :required="couponChecked"
+      v-model="couponInput"
     />
   </div>
 </template>
@@ -42,14 +42,15 @@ export default {
   },
   computed: {
     ...mapState({
-      couponInput: state => state.coupon.input
+      couponChecked: state => state.coupon.checked,
+      couponInputStore: state => state.coupon.input
     }),
     ...mapGetters({
       isCouponInputValid: 'coupon/isInputValid'
     }),
-    couponCode: {
+    couponInput: {
       get() {
-        return this.couponInput
+        return this.couponInputStore
       },
       set(value) {
         this.SET_INPUT_COUPON(value)
@@ -73,12 +74,13 @@ export default {
   },
   methods: {
     ...mapMutations({
+      TOGGLE_CHECKED_COUPON: 'coupon/TOGGLE_CHECKED',
       SET_INPUT_COUPON: 'coupon/SET_INPUT',
       PUSH_ITEM_TO_DISCOUNT: 'discounts/PUSH_ITEM',
       REMOVE_ITEM_FROM_DISCOUNT: 'discounts/REMOVE_ITEM'
     }),
     handleCheck(value) {
-      this.radioChecked = value
+      this.TOGGLE_CHECKED_COUPON(value)
     }
   }
 }

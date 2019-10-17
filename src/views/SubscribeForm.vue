@@ -243,7 +243,10 @@
           </section>
           <section class="form__form-section form-section">
             <div class="form-section__block">
-              <SubInputNativeCheckbox>
+              <SubInputNativeCheckbox
+                :checked="agreementChecked"
+                @change="handleCheckAgreement"
+              >
                 我已閱讀並同意：
               </SubInputNativeCheckbox>
             </div>
@@ -469,6 +472,22 @@ const mixinDelivery = {
   }
 }
 
+const mixinAgreement = {
+  computed: {
+    ...mapState({
+      agreementChecked: state => state.agreement.checked
+    })
+  },
+  methods: {
+    handleCheckAgreement(value) {
+      this.TOGGLE_CHECKED_AGREEMENT(value)
+    },
+    ...mapMutations({
+      TOGGLE_CHECKED_AGREEMENT: 'agreement/TOGGLE_CHECKED',
+    })
+  }
+}
+
 export default {
   components: {
     SubHeader,
@@ -489,7 +508,8 @@ export default {
   mixins: [
     mixinFixedAside,
     getMixinCustomer(),
-    mixinDelivery
+    mixinDelivery,
+    mixinAgreement
   ],
   computed: {
     ...mapState({

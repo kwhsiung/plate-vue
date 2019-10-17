@@ -11,6 +11,7 @@
         ...$listeners,
         input: handleInput
       }"
+      :checked="value === radioValue"
     >
     <span class="checkmark" />
   </label>
@@ -20,6 +21,9 @@
 export default {
   inheritAttrs: false,
   props: {
+    value: {
+      type: null
+    },
     radioValue: {
       type: null
     }

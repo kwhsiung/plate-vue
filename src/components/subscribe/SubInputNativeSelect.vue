@@ -1,8 +1,17 @@
 <template>
-  <select>
+  <select
+    :value="value"
+    @input="$emit('input', $event.target.value)"
+  >
     <slot />
   </select>
 </template>
+
+<script>
+export default {
+  props: [ 'value' ]
+}
+</script>
 
 <style lang="stylus" scoped>
 select

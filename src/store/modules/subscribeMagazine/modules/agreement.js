@@ -2,12 +2,12 @@ export default {
   namespaced: true,
   state() {
     return {
-      picked: 'normal'
+      checked: false
     }
   },
   mutations: {
-    SET_VALUE(state, value) {
-      state.picked = value
+    TOGGLE_CHECKED(state, value) {
+      state.checked = value
     }
   }
 }

@@ -6,7 +6,7 @@
         name="invoice"
         required
         :radio-value="'lovecode'"
-        v-model="invoice"
+        v-model="pickedInvoiceType"
       >
         捐贈
       </SubInputNativeRadio>
@@ -17,6 +17,7 @@
         type="text"
         :required="radioChecked"
         placeholder="請輸入愛心碼 8 位數字"
+        v-model="inputLovecode"
       />
       <a
         class="lovecode__link"
@@ -36,43 +37,31 @@ import SubInputNativeRadio from './SubInputNativeRadio.vue'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapMutations } = createNamespacedHelpers('subscribeMagazine')
 
-const mixinInvoice = {
-  computed: {
-    ...mapState({
-      pickedInvoice: state => state.invoice.picked
-    }),
-
-    invoice: {
-      get() {
-        return this.pickedInvoice
-      },
-      set(value) {
-        this.SET_VALUE_INVOICE(value)
-      }
-    }
-  },
-  methods: {
-    ...mapMutations({
-      SET_VALUE_INVOICE: 'invoice/SET_VALUE',
-    })
-  }
-}
+import mixinInvoice from './mixins/invoice'
 
 export default {
   components: {
     SubInput,
     SubInputNativeRadio
   },
-  mixins: [ mixinInvoice ],
+  mixins: [ mixinInvoice('lovecode') ],
   computed: {
-    radioChecked() {
-      return this.pickedInvoice === 'lovecode'
+    ...mapState({
+      inputLovecodeStore: state => state.invoice.inputLovecode
+    }),
+    inputLovecode: {
+      get() {
+        return this.inputLovecodeStore
+      },
+      set(value) {
+        this.SET_VALUE_INVOICE({ key: 'inputLovecode', value })
+      }
     }
   },
   methods: {
-    handleCheck(value) {
-      this.radioChecked = value
-    }
+    ...mapMutations({
+      SET_VALUE_INVOICE: 'invoice/SET_VALUE'
+    })
   }
 }
 </script>

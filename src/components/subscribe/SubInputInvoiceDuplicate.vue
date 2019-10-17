@@ -6,7 +6,7 @@
         name="invoice"
         required
         :radio-value="'duplicate'"
-        v-model="invoice"
+        v-model="pickedInvoiceType"
       >
         二聯式發票（含載具）
       </SubInputNativeRadio>
@@ -14,12 +14,13 @@
     <SubInputNativeSelect
       v-show="radioChecked"
       class="invoice-duplicate__input"
+      v-model="pickedDuplicate"
     >
       <option
         v-for="option in options"
-        :key="option"
-        :value="option"
-        v-text="option"
+        :key="option.value"
+        :value="option.value"
+        v-text="option.name"
       />
     </SubInputNativeSelect>
     <SubInput
@@ -27,7 +28,8 @@
       class="invoice-duplicate__input"
       type="text"
       :required="radioChecked"
-      placeholder="xxxxxx"
+      :placeholder="placeholder"
+      v-model="inputDuplicate"
     />
   </div>
 </template>
@@ -37,30 +39,12 @@ import SubInput from './SubInput.vue'
 import SubInputNativeRadio from './SubInputNativeRadio.vue'
 import SubInputNativeSelect from './SubInputNativeSelect.vue'
 
+import _ from 'lodash'
+
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapMutations } = createNamespacedHelpers('subscribeMagazine')
 
-const mixinInvoice = {
-  computed: {
-    ...mapState({
-      pickedInvoice: state => state.invoice.picked
-    }),
-
-    invoice: {
-      get() {
-        return this.pickedInvoice
-      },
-      set(value) {
-        this.SET_VALUE_INVOICE(value)
-      }
-    }
-  },
-  methods: {
-    ...mapMutations({
-      SET_VALUE_INVOICE: 'invoice/SET_VALUE',
-    })
-  }
-}
+import mixinInvoice from './mixins/invoice'
 
 export default {
   components: {
@@ -68,25 +52,63 @@ export default {
     SubInputNativeRadio,
     SubInputNativeSelect
   },
-  mixins: [ mixinInvoice ],
+  mixins: [ mixinInvoice('duplicate') ],
   data() {
     return {
       options: [
-        'Email 載具',
-        '手機條碼載具',
-        '自然人憑證條碼'
+        {
+          name: 'Email 載具',
+          value: 'email',
+          placeholder: '如：service@mirrormedia.mg'
+        },
+        {
+          name: '手機條碼載具',
+          value: 'mobile-barcode',
+          placeholder: '如：/1234ABC'
+        },
+        {
+          name: '自然人憑證條碼',
+          value: 'natural-person',
+          placeholder: '如：AB00001234567890'
+        }
       ]
     }
   },
   computed: {
-    radioChecked() {
-      return this.pickedInvoice === 'duplicate'
+    ...mapState({
+      pickedDuplicateStore: state => state.invoice.pickedDuplicate,
+      inputDuplicateStore: state => state.invoice.inputDuplicate
+    }),
+    pickedDuplicate: {
+      get() {
+        return this.pickedDuplicateStore
+      },
+      set(value) {
+        this.SET_VALUE_INVOICE({ key: 'pickedDuplicate', value })
+      }
+    },
+    inputDuplicate: {
+      get() {
+        return this.inputDuplicateStore
+      },
+      set(value) {
+        this.SET_VALUE_INVOICE({ key: 'inputDuplicate', value })
+      }
+    },
+    placeholder() {
+      const option = _.find(this.options, [ 'value', this.pickedDuplicate ])
+      return _.get(option, 'placeholder', '')
+    }
+  },
+  watch: {
+    pickedDuplicate() {
+      this.SET_VALUE_INVOICE({ key: 'inputDuplicate', value: '' })
     }
   },
   methods: {
-    handleCheck(value) {
-      this.radioChecked = value
-    }
+    ...mapMutations({
+      SET_VALUE_INVOICE: 'invoice/SET_VALUE'
+    })
   }
 }
 </script>

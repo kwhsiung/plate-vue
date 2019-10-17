@@ -5,6 +5,7 @@ import discounts from './modules/discounts'
 import customer from './modules/customer'
 import delivery from './modules/delivery'
 import invoice from './modules/invoice'
+import agreement from './modules/agreement'
 
 export default {
   namespaced: true,
@@ -17,7 +18,8 @@ export default {
     coupon,
     customer,
     delivery,
-    invoice
+    invoice,
+    agreement
   },
   state() {
     return {
