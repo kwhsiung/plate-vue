@@ -312,16 +312,7 @@
       >
         <SubHintPriceTotal
           class="aside__item"
-          :items="[
-            {
-              itemTitle: '商品總計商品總計商品總計',
-              itemPrice: 999
-            },
-            {
-              itemTitle: '-112',
-              itemPrice: -1000
-            }
-          ]"
+          :items="totalItems"
         />
         <SubHintDiscount
           class="aside__item aside__item--will-fade-in-up"
@@ -355,7 +346,7 @@ import SubFooter from 'src/components/subscribe/SubFooter.vue'
 import _ from 'lodash'
 
 import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapMutations } = createNamespacedHelpers('subscribeMagazine')
+const { mapState, mapMutations, mapGetters } = createNamespacedHelpers('subscribeMagazine')
 
 const mixinFixedAside = {
   data() {
@@ -515,21 +506,24 @@ export default {
     ...mapState({
       hadSubmitClicked: state => state.ui.hadSubmitClicked,
       discounts: state => state.discounts.items
-    })
+    }),
+    ...mapGetters([ 'totalItems' ])
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
-      vm.CLEAR_ITEMS_FROM_CART()
-      vm.CLEAR_ITEMS_FROM_DISCOUNT()
+      // vm.CLEAR_ITEMS_FROM_CART()
+      // vm.CLEAR_ITEMS_FROM_DISCOUNT()
 
       switch (vm.$route.params.yearDuration) {
         case '1':
           vm.PUSH_ITEM_TO_CART({
             title: '一年 52 期，加贈 5 期方案',
             quantity: 1,
+            publicationCount: 52,
             unitPrice: 2880
           })
           vm.PUSH_ITEM_TO_DISCOUNT({
+            type: 'plan',
             title: '符合一年方案優惠',
             value: null,
             caption: '贈送 5 期'
@@ -539,9 +533,11 @@ export default {
           vm.PUSH_ITEM_TO_CART({
             title: '二年份 104 期，加贈 10 期方案',
             quantity: 1,
+            publicationCount: 104,
             unitPrice: 5280
           })
           vm.PUSH_ITEM_TO_DISCOUNT({
+            type: 'plan',
             title: '符合二年方案優惠',
             value: null,
             caption: '贈送 10 期'

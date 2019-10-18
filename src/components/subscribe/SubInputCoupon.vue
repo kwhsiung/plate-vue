@@ -58,18 +58,22 @@ export default {
     }
   },
   watch: {
-    isCouponInputValid() {
-      const discount = {
-        title: '符合續訂優惠',
-        value: -80,
-        caption: '贈送 1 期'
-      }
+    isCouponInputValid: {
+      handler() {
+        const discount = {
+          type: 'coupon',
+          title: '符合續訂優惠',
+          value: -80,
+          caption: '贈送 1 期'
+        }
 
-      if (this.isCouponInputValid) {
-        this.PUSH_ITEM_TO_DISCOUNT(discount)
-      } else {
-        this.REMOVE_ITEM_FROM_DISCOUNT(discount)
-      }
+        if (this.isCouponInputValid) {
+          this.PUSH_ITEM_TO_DISCOUNT(discount)
+        } else {
+          this.REMOVE_ITEM_FROM_DISCOUNT(discount)
+        }
+      },
+      immediate: true
     }
   },
   methods: {

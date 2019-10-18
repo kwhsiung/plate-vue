@@ -1,8 +1,10 @@
 
 import * as yup from 'yup'
 import Vue from 'vue'
+import _ from 'lodash'
 
 const schemaItem = yup.object().shape({
+  type: yup.string().required(),
   title: yup.string().required(),
   value: yup.number().negative().nullable(),
   caption: yup.string().required()
@@ -20,7 +22,15 @@ export default {
       Vue.set(state, 'items', [])
     },
     PUSH_ITEM(state, item) {
-      if (schemaItem.validateSync(item)) {
+      schemaItem.validateSync(item)
+
+      if (item.type === 'plan') {
+        const clearPlans = state.items.filter(item => item.type !== 'plan')
+        Vue.set(state, 'items', clearPlans)
+      }
+
+      const itemExist = _.findIndex(state.items, [ 'title', item.title ]) !== -1
+      if (!itemExist) {
         state.items.push(item)
       }
     },

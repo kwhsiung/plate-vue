@@ -20,8 +20,8 @@ export default {
       Vue.set(state, 'items', [])
     },
     PUSH_ITEM(state, item) {
-      if (schemaItem.validateSync(item)) {
-        state.items.push(item)
+      if (schemaItem.validateSync(item) && _.findIndex(state.items, [ 'title', item.title ]) === -1) {
+        state.items.splice(0, 1, item)
       }
     },
     REMOVE_ITEM(state, itemMatch) {

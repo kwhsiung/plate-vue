@@ -7,6 +7,8 @@ import delivery from './modules/delivery'
 import invoice from './modules/invoice'
 import agreement from './modules/agreement'
 
+import _ from 'lodash'
+
 export default {
   namespaced: true,
   modules: {
@@ -33,6 +35,47 @@ export default {
 
   },
   getters: {
+    totalItems(state) {
+      const cartItems =
+        state.cart.items
+          .map(item => ({
+            itemTitle: item.title,
+            itemPrice: item.unitPrice * item.quantity
+          }))
 
+      const discountItems =
+        state.discounts.items
+          .filter(item => item.value)
+          .map(item => ({
+            itemTitle: item.title,
+            itemPrice: item.value
+          }))
+
+      let delivery = {}
+      switch (state.delivery.picked) {
+        case 'registered': {
+          const quantity = _.get(state.cart, [ 'items', 0, 'quantity' ], 1)
+          const publicationCount = _.get(state.cart, [ 'items', 0, 'publicationCount' ], 0)
+          delivery = {
+            itemTitle: '運費總計',
+            itemPrice: 20 * publicationCount * quantity
+          }
+          break
+        }
+        case 'normal':
+        default:
+          delivery = {
+            itemTitle: '運費總計',
+            itemPrice: 0
+          }
+          break
+      }
+
+      return [
+        ...cartItems,
+        ...discountItems,
+        delivery
+      ]
+    }
   }
 }
