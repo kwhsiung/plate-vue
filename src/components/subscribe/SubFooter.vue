@@ -46,6 +46,7 @@ p
   footer
     height auto
     padding 20px 0
+    padding-bottom calc(20px + 44px)
 
   ul
     flex-direction column

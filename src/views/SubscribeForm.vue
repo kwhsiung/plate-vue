@@ -321,7 +321,7 @@
       <aside
         :class="[
           'section__aside',
-          { 'section__aside--fixed': shouldAsideFixed },
+          { 'section__aside--fixed': isFormCollidWithTop },
           'aside'
         ]"
       >
@@ -338,7 +338,17 @@
         />
       </aside>
     </section>
-    <SubFooter class="sub__footer" />
+    <SubFooter
+      class="sub__footer"
+    />
+    <transition name="fade" mode="out-in">
+      <SubHintPriceTotalFooter
+        v-show="isFormCollidWithTop"
+        class="sub__hint-price-total-bottom"
+        :items="totalItems"
+        @backToTop="handleBackToTop"
+      />
+    </transition>
   </section>
 </template>
 
@@ -356,6 +366,7 @@ import SubCreditCardLogos from 'src/components/subscribe/SubCreditCardLogos.vue'
 import SubTPField from 'src/components/subscribe/SubTPField.vue'
 import SubButtonSubmit from 'src/components/subscribe/SubButtonSubmit.vue'
 import SubHintPriceTotal from 'src/components/subscribe/SubHintPriceTotal.vue'
+import SubHintPriceTotalFooter from 'src/components/subscribe/SubHintPriceTotalFooter.vue'
 import SubHintDiscount from 'src/components/subscribe/SubHintDiscount.vue'
 import SubFooter from 'src/components/subscribe/SubFooter.vue'
 
@@ -364,10 +375,10 @@ import _ from 'lodash'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapMutations, mapGetters } = createNamespacedHelpers('subscribeMagazine')
 
-const mixinFixedAside = {
+const mixinIntersectionObserver = {
   data() {
     return {
-      shouldAsideFixed: false
+      isFormCollidWithTop: false
     }
   },
   methods: {
@@ -380,7 +391,7 @@ const mixinFixedAside = {
 
       const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
-          this.shouldAsideFixed = entry.isIntersecting
+          this.isFormCollidWithTop = entry.isIntersecting
         })
       }, options)
 
@@ -531,11 +542,12 @@ export default {
     SubTPField,
     SubButtonSubmit,
     SubHintPriceTotal,
+    SubHintPriceTotalFooter,
     SubHintDiscount,
     SubFooter
   },
   mixins: [
-    mixinFixedAside,
+    mixinIntersectionObserver,
     getMixinCustomer(),
     mixinDelivery,
     mixinAgreement
@@ -623,6 +635,9 @@ export default {
     }),
     handleSubmit() {
       this.TOGGLE_SUBMIT_STATE_ON()
+    },
+    handleBackToTop() {
+      this.$scrollTo('#sub-form-header')
     }
   }
 }
@@ -640,6 +655,10 @@ export default {
     transform: translate3d(0, 0, 0);
   }
 }
+
+.sub
+  &__hint-price-total-bottom
+    display none
 
 .section
   max-width 990px
@@ -742,6 +761,13 @@ export default {
     margin 0 auto
 
 @media (max-width 768px)
+  .sub
+    &__hint-price-total-bottom
+      display flex
+      position fixed
+      left 0
+      bottom 0
+
   .section
     max-width auto
     margin 0

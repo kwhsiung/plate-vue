@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
+import VueScrollTo from 'vue-scrollto'
 import App from './App.vue'
 // import store from './store'
 import { createStore } from './store'
@@ -13,6 +14,7 @@ import * as filters from './filters'
 // mixin for handling title
 Vue.mixin(titleMetaMixin)
 Vue.use(VueI18n)
+Vue.use(VueScrollTo)
 
 // register global utility filters.
 Object.keys(filters).forEach(key => {
