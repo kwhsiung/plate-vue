@@ -268,28 +268,43 @@
             <div class="form-section__block form-section__block--more-margin">
               <label class="form-section__label">
                 卡號
-                <SubInput
+                <!-- <SubInput
+                  id="card-number"
                   class="form-section__input form-section__input--l"
                   placeholder="0000 0000 0000 0000"
                   required
+                /> -->
+                <SubTPField
+                  id="card-number"
+                  class="form-section__input form-section__input--l"
                 />
               </label>
             </div>
             <div class="form-section__block form-section__block--row-mobile">
               <label class="form-section__label">
                 有效期限
-                <SubInput
+                <!-- <SubInput
+                  id="card-expiration-date"
                   class="form-section__input form-section__input--xs"
                   placeholder="MM / YY"
                   required
+                /> -->
+                <SubTPField
+                  id="card-expiration-date"
+                  class="form-section__input form-section__input--xs"
                 />
               </label>
               <label class="form-section__label">
                 卡片後三碼
-                <SubInput
+                <!-- <SubInput
+                  id="card-ccv"
                   class="form-section__input form-section__input--xs"
-                  placeholder="CVV"
+                  placeholder="CCV"
                   required
+                /> -->
+                <SubTPField
+                  id="card-ccv"
+                  class="form-section__input form-section__input--xs"
                 />
               </label>
             </div>
@@ -338,6 +353,7 @@ import SubInputLovecode from 'src/components/subscribe/SubInputLovecode.vue'
 import SubInputInvoiceDuplicate from 'src/components/subscribe/SubInputInvoiceDuplicate.vue'
 import SubInputInvoiceTriplicate from 'src/components/subscribe/SubInputInvoiceTriplicate.vue'
 import SubCreditCardLogos from 'src/components/subscribe/SubCreditCardLogos.vue'
+import SubTPField from 'src/components/subscribe/SubTPField.vue'
 import SubButtonSubmit from 'src/components/subscribe/SubButtonSubmit.vue'
 import SubHintPriceTotal from 'src/components/subscribe/SubHintPriceTotal.vue'
 import SubHintDiscount from 'src/components/subscribe/SubHintDiscount.vue'
@@ -479,6 +495,27 @@ const mixinAgreement = {
   }
 }
 
+// This function will work cross-browser for loading scripts asynchronously
+const loadScript = (src, callback) => {
+  let s
+  let r
+  let t
+  r = false
+  s = document.createElement('script')
+  s.async = true
+  s.type = 'text/javascript'
+  s.src = src
+  s.onload = s.onreadystatechange = function() {
+    //console.log(this.readyState) //uncomment this line to see which ready states are called.
+    if (!r && (!this.readyState || this.readyState === 'complete')){
+      r = true
+      typeof callback === 'function' && callback()
+    }
+  }
+  t = document.getElementsByTagName('script')[0]
+  t.parentNode.insertBefore(s, t)
+}
+
 export default {
   components: {
     SubHeader,
@@ -491,6 +528,7 @@ export default {
     SubInputInvoiceDuplicate,
     SubInputInvoiceTriplicate,
     SubCreditCardLogos,
+    SubTPField,
     SubButtonSubmit,
     SubHintPriceTotal,
     SubHintDiscount,
@@ -511,9 +549,6 @@ export default {
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
-      // vm.CLEAR_ITEMS_FROM_CART()
-      // vm.CLEAR_ITEMS_FROM_DISCOUNT()
-
       switch (vm.$route.params.yearDuration) {
         case '1':
           vm.PUSH_ITEM_TO_CART({
@@ -546,6 +581,32 @@ export default {
         default:
           break
       }
+    })
+  },
+  mounted() {
+    loadScript('https://js.tappaysdk.com/tpdirect/v5', () => {
+      window.TPDirect.setupSDK('12446', 'app_9vfyLxWHeAiHo4RDI5Bz2p5GrucAXrZVmAemg5RIiw3ZYbnbuJurldd7As67', 'sandbox')
+      window.TPDirect.card.setup({
+        fields: {
+          number: {
+            element: '#card-number',
+            placeholder: '0000 0000 0000 0000'
+          },
+          ccv: {
+            element: '#card-ccv',
+            placeholder: '末三碼'
+          },
+          expirationDate: {
+            element: '#card-expiration-date',
+            placeholder: 'MM / YY'
+          }
+        },
+        styles: {
+          input: {
+            'font-size': '15px'
+          }
+        }
+      })
     })
   },
   methods: {
