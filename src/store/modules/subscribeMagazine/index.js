@@ -32,7 +32,18 @@ export default {
 
   },
   actions: {
+    SEND({ state }) {
+      const payload = {
+        cart: state.cart,
+        discounts: state.discounts.items.filter(item => item.value),
+        coupon: state.coupon,
+        customer: state.customer,
+        delivery: state.delivery,
+        invoice: state.invoice
+      }
 
+      console.log(payload)
+    }
   },
   getters: {
     totalItems(state) {

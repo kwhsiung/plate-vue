@@ -373,7 +373,7 @@ import SubFooter from 'src/components/subscribe/SubFooter.vue'
 import _ from 'lodash'
 
 import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapMutations, mapGetters } = createNamespacedHelpers('subscribeMagazine')
+const { mapState, mapMutations, mapActions, mapGetters } = createNamespacedHelpers('subscribeMagazine')
 
 const mixinIntersectionObserver = {
   data() {
@@ -633,8 +633,11 @@ export default {
       PUSH_ITEM_TO_DISCOUNT: 'discounts/PUSH_ITEM',
       CLEAR_ITEMS_FROM_DISCOUNT: 'discounts/CLEAR_ITEMS',
     }),
+    ...mapActions([ 'SEND' ]),
     handleSubmit() {
       this.TOGGLE_SUBMIT_STATE_ON()
+      
+      this.SEND()
     },
     handleBackToTop() {
       this.$scrollTo('#sub-form-header')
