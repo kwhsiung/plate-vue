@@ -312,6 +312,10 @@
           <section class="form__form-section form-section">
             <SubButtonSubmit
               class="button button--submit"
+              @click.native="$router.push({
+                name: 'subscribeMagazineResult',
+                params: { redirect: false }
+              })"
             >
               確認訂購
             </SubButtonSubmit>

@@ -17,9 +17,7 @@
           <td>
             訂單日期
           </td>
-          <td>
-            2019-12-25
-          </td>
+          <td v-text="date" />
         </tr>
         <tr>
           <td>
@@ -28,16 +26,7 @@
           <td>
             <SubTablePriceTotal
               class="table__price-total-table table__price-total-table--desktop"
-              :items="[
-                {
-                  itemTitle: '商品總計商品總計商品總計',
-                  itemPrice: 999
-                },
-                {
-                  itemTitle: '-112',
-                  itemPrice: -1000
-                }
-              ]"
+              :items="totalItems"
             />
           </td>
         </tr>
@@ -45,16 +34,7 @@
     </table>
     <SubTablePriceTotal
       class="table__price-total-table table__price-total-table--mobile"
-      :items="[
-        {
-          itemTitle: '商品總計商品總計商品總計',
-          itemPrice: 999
-        },
-        {
-          itemTitle: '-112',
-          itemPrice: -1000
-        }
-      ]"
+      :items="totalItems"
     />
   </div>
 </template>
@@ -62,9 +42,34 @@
 <script>
 import SubTablePriceTotal from './SubTablePriceTotal.vue'
 
+import { createNamespacedHelpers } from 'vuex'
+const { mapGetters } = createNamespacedHelpers('subscribeMagazine')
+
 export default {
   components: {
     SubTablePriceTotal
+  },
+  computed: {
+    ...mapGetters([ 'totalItems' ]),
+    date() {
+      const getFormatDate = () => {
+        const d = new Date()
+        let month = '' + (d.getMonth() + 1)
+        let day = '' + d.getDate()
+        const year = d.getFullYear()
+
+        if (month.length < 2) {
+          month = '0' + month
+        }
+        if (day.length < 2) {
+          day = '0' + day
+        } 
+
+        return [ year, month, day ].join('-')
+      }
+
+      return getFormatDate()
+    }
   }
 }
 </script>
