@@ -66,20 +66,42 @@ export function createRouter () {
       { path: '/timeline/:title', component: TimelineView },
       { path: '/tag/:tagId', component: List },
       { path: '/topic/:topicId', component: Topic },
-      { path: '/subscribe-magazine-plans', component: SubscribePlans },
-      { path: '/subscribe-magazine-form/:yearDuration', component: SubscribeForm },
+      {
+        name: 'subscribeMagazinePlans',
+        path: '/subscribe-magazine-plans',
+        component: SubscribePlans
+      },
+      {
+        name: 'subscribeMagazineForm',
+        path: '/subscribe-magazine-form/:yearDuration',
+        component: SubscribeForm
+      },
       { 
+        name: 'subscribeMagazineResult',
         path: '/subscribe-magazine-result',
         component: SubscribeResult,
-        // redirect() {
-        //   return '/subscribe-plans'
+        // props: true,
+        // beforeEnter: (to, from, next) => {
+        //   const { redirect = true } = to.params
+        //   if (redirect) {
+        //     next('/subscribe-magazine-plans')
+        //   } else {
+        //     next()
+        //   }
         // }
       },
       { 
+        name: 'subscribeMagazineError',
         path: '/subscribe-magazine-error',
         component: SubscribeError,
-        // redirect() {
-        //   return '/subscribe-plans'
+        // props: true,
+        // beforeEnter: (to, from, next) => {
+        //   const { redirect = true } = to.params
+        //   if (redirect) {
+        //     next('/subscribe-magazine-plans')
+        //   } else {
+        //     next()
+        //   }
         // }
       },
       { path: '/404', component: NotFound },

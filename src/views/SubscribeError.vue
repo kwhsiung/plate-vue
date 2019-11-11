@@ -11,6 +11,7 @@
         </h1>
         <SubButtonSubmit
           class="dialog__submit"
+          @click.native="$router.back()"
         >
           回前頁
         </SubButtonSubmit>
