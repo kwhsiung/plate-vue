@@ -99,6 +99,7 @@ li
         margin 0 15px
 
     span
-      width 30px
+      width 33px
+      height 44px
       line-height 1.5
 </style>
